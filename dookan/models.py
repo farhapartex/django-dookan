@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.forms import ValidationError
 from django.utils.text import slugify
 import logging, sys
+from .utils import *
 
 # Create your models here.
 logger = logging.getLogger(__name__)
@@ -36,3 +37,19 @@ class Base(models.Model):
 
     class Meta:
         abstract = True
+
+
+class Category(Base):
+    """docstring for Category."""
+    name = models.CharField(_("Category Name"), max_length=55)
+    parent = models.ForeignKey("self", verbose_name=_("Parent"), related_name="children", on_delete=models.CASCADE, blank=True, null=True)
+    publish = models.BooleanField(_("Publish"), default=True)
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        """docstring for Meta."""
+        verbose_name_plural = "Categories"
+            
+        
