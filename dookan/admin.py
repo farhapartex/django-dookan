@@ -9,6 +9,32 @@ logger = logging.getLogger(__name__)
 
 # Register your models here.
 
+@admin.register(Media)
+class MediaAdmin(admin.ModelAdmin):
+    list_display = ("id", "image","md_image","sm_image", "created_by", "created_at")
+    fieldsets = (
+        ("Required Information", {
+            "description": "These fields are required for each Media",
+            "fields": (
+                ('image', 'image_tag'),
+            ),
+        }),
+        ("Optional Information", {
+            'classes': ('collapse',),
+            'fields': (
+                ('md_image','sm_image'),
+            )
+        })
+    )
+    readonly_fields = ('image_tag',)
+
+    def image_tag(self, obj):
+        logger.critical(obj.image.url)
+        return format_html('<img src="{}" width="160" height="135"/>'.format(obj.image.url))
+
+    image_tag.short_description = 'Image'
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "parent", "publish", "created_by", "created_at")
