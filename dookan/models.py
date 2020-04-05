@@ -10,6 +10,10 @@ from .utils import *
 from .files import *
 from .media import DynamicImageResize
 
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 # Create your models here.
 logger = logging.getLogger(__name__)
 USER_MODEL = get_user_model()
@@ -58,15 +62,18 @@ class Media(Base):
             md_size = (768,1024)
             sm_size = (265, 300)
 
+        image_data = self.image.name.split("/")
+
+        
+
         if not self.md_image:
             self.md_image = DynamicImageResize(md_size, self.image).get_resize_image()
         if not self.sm_image:
             self.sm_image = DynamicImageResize(sm_size, self.image).get_resize_image()
 
-        if self.title is None:
-            self.title = self.image.name.split("/")[1].split(".")[0]
-
         super(Media, self).save(*args, **kwargs)
+        # instance = Media.objects.latest("id")
+        # logger.critical(instance)
     
     def __str__(self):
         return self.image.name
@@ -84,5 +91,6 @@ class Category(Base):
     class Meta:
         """docstring for Meta."""
         verbose_name_plural = "Categories"
+
             
         
