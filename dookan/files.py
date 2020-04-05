@@ -17,24 +17,11 @@ def sm_image_upload_path(instance, filename):
     return "small/{1}".format(instance.id,filename)
 
 
-def rename_image(id, title, image):
+def rename_image(new_name, image):
     image_data = image.name.split("/")
+    initial_path = image.path
+    image.name = image_data[0]+'/'+ new_name +"."+ image_data[1].split(".")[1]
+    new_path = settings.MEDIA_ROOT + image.name
+    os.rename(initial_path, new_path)
 
-    if title is None:
-        if id is None:
-            image_name = image_data[0].split(".")[0]
-            if len(image_name) > 15:
-                image_name = image_name[0:15]
-        else:
-            image_name = image_data[1].split(".")[0]
-            if len(image_name) > 15:
-                image_name = image_name[0:15]
-        title = image_name
-    else:
-        initial_path = image.path
-        if id is None:
-            image.name = title+image_data[0].split(".")[1]
-        else:
-            image.name = image_data[0]+'/'+title+image_data[1].split(".")[1]
-
-        new_path = settings.MEDIA_ROOT + image.name
+    return image

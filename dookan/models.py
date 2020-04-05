@@ -62,18 +62,12 @@ class Media(Base):
             md_size = (768,1024)
             sm_size = (265, 300)
 
-        image_data = self.image.name.split("/")
-
-        
-
         if not self.md_image:
             self.md_image = DynamicImageResize(md_size, self.image).get_resize_image()
         if not self.sm_image:
             self.sm_image = DynamicImageResize(sm_size, self.image).get_resize_image()
 
         super(Media, self).save(*args, **kwargs)
-        # instance = Media.objects.latest("id")
-        # logger.critical(instance)
     
     def __str__(self):
         return self.image.name
