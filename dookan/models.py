@@ -63,6 +63,9 @@ class Media(Base):
         if not self.sm_image:
             self.sm_image = DynamicImageResize(sm_size, self.image).get_resize_image()
 
+        if self.title is None:
+            self.title = self.image.name.split("/")[1].split(".")[0]
+
         super(Media, self).save(*args, **kwargs)
     
     def __str__(self):
