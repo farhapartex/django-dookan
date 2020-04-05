@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 @admin.register(Media)
 class MediaAdmin(admin.ModelAdmin):
-    list_display = ("title", "image","md_image","sm_image", "created_by", "created_at", "list_image_tag")
+    list_display = ("title", "image","md_image","sm_image", "created_by", "list_image_tag")
     fieldsets = (
         ("Required Information", {
             "description": "These fields are required for each Media",

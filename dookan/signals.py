@@ -14,12 +14,10 @@ def media_action(sender, instance, created, **kwargs):
         image_data = instance.image.name.split("/")
         if instance.title is None or instance.title == "":
             instance.title = image_data[1].split(".")[0]
-            if len(instance.title) > 15:
-                instance.title = instance.title[0:15]
+            if len(instance.title) > 10:
+                instance.title = instance.title[0:10]
 
-        instance.image = rename_image(instance.title, instance.image)
-    
-        # instance.image = rename_image(instance.title,instance.image)
+        instance.image, instance.md_image, instance.sm_image = rename_image(instance.title, instance)
         instance.save()
 
     
