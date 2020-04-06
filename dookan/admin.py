@@ -28,6 +28,8 @@ class MediaAdmin(admin.ModelAdmin):
         })
     )
     readonly_fields = ('image_tag',)
+    list_per_page=10
+    
 
     def image_tag(self, obj):
         return format_html('<img src="{}" width="160" height="135"/>'.format(obj.image.url))
@@ -44,3 +46,22 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "parent", "publish", "created_by", "created_at")
     list_filter = ('publish', 'created_at', 'parent', )
     fields = (("parent", "name"), "publish")
+    list_per_page=10
+
+
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
+    list_display = ("name", "publish", "created_by", "created_at")
+    list_filter = ('publish', 'created_at', 'name', )
+    fields = ("name","publish")
+    list_per_page=10
+
+@admin.register(ProductType)
+class ProductTypeAdmin(admin.ModelAdmin):
+    list_display = ("name", "created_by", "created_at")
+    list_filter = ('name', 'created_at', )
+    list_per_page=10
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    pass
