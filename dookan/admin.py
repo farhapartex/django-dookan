@@ -55,3 +55,13 @@ class BrandAdmin(admin.ModelAdmin):
     list_filter = ('publish', 'created_at', 'name', )
     fields = ("name","publish")
     list_per_page=10
+
+@admin.register(ProductType)
+class ProductTypeAdmin(admin.ModelAdmin):
+    list_display = ("name", "created_by", "created_at")
+    list_filter = ('name', 'created_at', )
+    list_per_page=10
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    pass
