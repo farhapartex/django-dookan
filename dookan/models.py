@@ -86,5 +86,13 @@ class Category(Base):
         """docstring for Meta."""
         verbose_name_plural = "Categories"
 
-            
+
+
+class Brand(Base):
+    name = models.CharField(_("Brand Name"), max_length=50)
+    publish = models.BooleanField(_("Publish"), default=True)
+
+    def __str__(self):
+        return self.name
+
         

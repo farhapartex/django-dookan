@@ -33,11 +33,11 @@ def rename_image(new_name, instance):
         image_data = images[i].name.split("/")
         initial_path = images[i].path
         if i == 0:
-            images[i].name = image_data[0]+'/'+ new_name +"."+ image_data[1].split(".")[1]
+            images[i].name = image_data[0]+'/'+ new_name +"."+ image_data[1].split(".")[-1]
         elif i == 1:
-            images[i].name = image_data[0]+'/'+ new_name +str(md_size[0])+"x"+str(md_size[1]) +"."+ image_data[1].split(".")[1]
+            images[i].name = image_data[0]+'/'+ new_name +str(md_size[0])+"x"+str(md_size[1]) +"."+ image_data[1].split(".")[-1]
         elif i == 2:
-            images[i].name = image_data[0]+'/'+ new_name +str(sm_size[0])+"x"+str(sm_size[1]) +"."+ image_data[1].split(".")[1]
+            images[i].name = image_data[0]+'/'+ new_name +str(sm_size[0])+"x"+str(sm_size[1]) +"."+ image_data[1].split(".")[-1]
         
         new_path = settings.MEDIA_ROOT + images[i].name
         os.rename(initial_path, new_path)
