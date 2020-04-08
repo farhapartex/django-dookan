@@ -64,4 +64,26 @@ class ProductTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ('category', 'brand', 'material', 'product_type' )
+    fieldsets = (
+        ("Required Information", {
+            "description": "These fields are required for each Product",
+            "fields": (
+                ('category', 'brand', 'product_type'),
+                ('name'),
+                ('description'),
+                ('default_price','quantity'),
+                ('images')
+            ),
+        }),
+        ("Optional Information", {
+            'classes': ('collapse',),
+            'fields': (
+                ('model','weight', 'unit'),
+                ('size', 'material', ),
+                ('discount_percentage', 'discount_price',),
+                ('product_key')
+            )
+        })
+    )
+    list_per_page=10
