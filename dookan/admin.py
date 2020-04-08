@@ -64,6 +64,7 @@ class ProductTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    list_display = ("product_name", "category", "default_price", "product_key", "publish")
     list_filter = ('category', 'brand', 'material', 'product_type' )
     fieldsets = (
         ("Required Information", {
@@ -86,4 +87,12 @@ class ProductAdmin(admin.ModelAdmin):
             )
         })
     )
-    list_per_page=10
+    list_per_page=15
+
+    def product_name(self, obj):
+        if len(obj.name) > 20:
+            return obj.name[0:20]+"..."
+        else:
+            return obj.name
+    
+    product_name.short_description = 'Product Name'

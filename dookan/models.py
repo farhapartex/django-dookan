@@ -122,7 +122,7 @@ class Product(Base):
     discount_price = models.DecimalField(_("Discount Price"), max_digits=12, decimal_places=2,blank=True, null=True)
     quantity = models.IntegerField(_("Quantity"), default=1)
     images = models.ManyToManyField(Media, verbose_name=_("Product Images"))
-    product_key = models.CharField(_("Product Key"), max_length=20, blank=True, null=True)
+    product_key = models.CharField(_("Product Key"), max_length=40, blank=True, null=True)
     publish = models.BooleanField(_("Publish"), default=True)
 
     def __str__(self):
@@ -135,7 +135,7 @@ class Product(Base):
         
         if not self.product_key:
             self.product_key = uuid.uuid4()
-            
+
         return super().save(*args, **kwargs)
 
         
