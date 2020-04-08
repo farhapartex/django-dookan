@@ -69,10 +69,10 @@ class ProductAdmin(admin.ModelAdmin):
         ("Required Information", {
             "description": "These fields are required for each Product",
             "fields": (
-                ('category', 'brand', 'product_type'),
+                ('category', 'brand', 'publish'),
                 ('name'),
-                ('description'),
-                ('default_price','quantity'),
+                ('description',),
+                ('default_price','quantity', 'product_type'),
                 ('images')
             ),
         }),

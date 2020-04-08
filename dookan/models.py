@@ -123,6 +123,7 @@ class Product(Base):
     quantity = models.IntegerField(_("Quantity"), default=1)
     images = models.ManyToManyField(Media, verbose_name=_("Product Images"))
     product_key = models.CharField(_("Product Key"), max_length=20, blank=True, null=True)
+    publish = models.BooleanField(_("Publish"), default=True)
 
     def __str__(self):
         return self.name
