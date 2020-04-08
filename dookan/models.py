@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.forms import ValidationError
 from django.utils.text import slugify
-import logging, sys
+import logging, sys, uuid
 from .utils import *
 from .files import *
 from .media import DynamicImageResize
@@ -127,5 +127,15 @@ class Product(Base):
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        if self.discount_percentage:
+            discount_amount = round((self.default_price * self.discount_percentage)/100)
+            self.discount_price = self.default_price-discount_amount
+        
+        if not self.product_key:
+            self.product_key = uuid.uuid4()
+            
+        return super().save(*args, **kwargs)
 
         
