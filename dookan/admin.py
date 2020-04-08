@@ -64,4 +64,35 @@ class ProductTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("product_name", "category", "default_price", "product_key", "publish")
+    list_filter = ('category', 'brand', 'material', 'product_type' )
+    fieldsets = (
+        ("Required Information", {
+            "description": "These fields are required for each Product",
+            "fields": (
+                ('category', 'brand', 'publish'),
+                ('name'),
+                ('description',),
+                ('default_price','quantity', 'product_type'),
+                ('images')
+            ),
+        }),
+        ("Optional Information", {
+            'classes': ('collapse',),
+            'fields': (
+                ('model','weight', 'unit'),
+                ('size', 'material', ),
+                ('discount_percentage', 'discount_price',),
+                ('product_key')
+            )
+        })
+    )
+    list_per_page=15
+
+    def product_name(self, obj):
+        if len(obj.name) > 20:
+            return obj.name[0:20]+"..."
+        else:
+            return obj.name
+    
+    product_name.short_description = 'Product Name'

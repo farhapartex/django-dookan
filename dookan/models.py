@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.forms import ValidationError
 from django.utils.text import slugify
-import logging, sys
+import logging, sys, uuid
 from .utils import *
 from .files import *
 from .media import DynamicImageResize
@@ -122,9 +122,20 @@ class Product(Base):
     discount_price = models.DecimalField(_("Discount Price"), max_digits=12, decimal_places=2,blank=True, null=True)
     quantity = models.IntegerField(_("Quantity"), default=1)
     images = models.ManyToManyField(Media, verbose_name=_("Product Images"))
-    product_key = models.CharField(_("Product Key"), max_length=20, blank=True, null=True)
+    product_key = models.CharField(_("Product Key"), max_length=40, blank=True, null=True)
+    publish = models.BooleanField(_("Publish"), default=True)
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        if self.discount_percentage:
+            discount_amount = round((self.default_price * self.discount_percentage)/100)
+            self.discount_price = self.default_price-discount_amount
+        
+        if not self.product_key:
+            self.product_key = uuid.uuid4()
+
+        return super().save(*args, **kwargs)
 
         
