@@ -146,7 +146,7 @@ class Coupon(Base):
     amount = models.IntegerField()
     amount_type = models.CharField(_("Amount Type"), choices=AMOUNT_TYPE_CHOICES, default='percentage', max_length=15)
     valid_from = models.DateField()
-    valit_until = models.DateField()
+    valid_until = models.DateField()
     active = models.BooleanField(default=True)
 
     def __str__(self):

@@ -112,5 +112,6 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):
-    list_display = ("category", "code", "amount", "amount_type", "valid_from", "valit_until")
-    list_filter = ("category", "code", "valid_from", "valit_until")
+    fields = (('category', 'code'), ('amount', 'amount_type'), ('valid_from',), 'valid_until', 'active')
+    list_display = ("category", "code", "amount", "amount_type", "valid_from", "valid_until", "active")
+    list_filter = ("category", "code", "valid_from", "valid_until")
