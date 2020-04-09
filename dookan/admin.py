@@ -42,6 +42,22 @@ class MediaAdmin(admin.ModelAdmin):
     list_image_tag.short_description = 'Image Preview'
 
 
+@admin.register(Customer)
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ("user", "active", "created_by", "created_at")
+    list_filter = ('created_at', )
+    fields = (("user", "active"), "billing_address","same_address", "delivery_address")
+    list_per_page=10
+
+
+@admin.register(PaymentMethod)
+class PaymentMethodAdmin(admin.ModelAdmin):
+    list_display = ("name", "code", "active", "created_at")
+    list_filter = ('code', 'active', 'created_at', )
+    fields = (("name", "code"), "active",)
+    list_per_page=10
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "parent", "publish", "created_by", "created_at")

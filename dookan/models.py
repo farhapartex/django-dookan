@@ -80,6 +80,7 @@ class Customer(Base):
     billing_address = models.TextField(_("Shipping Address"))
     same_address = models.BooleanField(_("Same address for delivery?"))
     delivery_address = models.TextField(_("Shipping Address"))
+    active = models.BooleanField(_("ACtive"), default=True)
 
     def __str__(self, arg):
         return self.user.username
