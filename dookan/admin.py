@@ -3,6 +3,7 @@ from django.utils.html import format_html
 from django.contrib import messages
 from django.contrib.contenttypes.admin import GenericTabularInline
 from .models import *
+from .widgets import *
 import logging
 
 logger = logging.getLogger(__name__)
@@ -62,8 +63,19 @@ class ProductTypeAdmin(admin.ModelAdmin):
     list_filter = ('name', 'created_at', )
     list_per_page=10
 
+
+class ProductAdminForm(forms.ModelForm):
+    model = Product
+    class Meta:
+        fields = '__all__'
+        widgets = {
+            'description': HtmlEditor(attrs={'style': 'width: 90%; height: 100%;'}),
+        }
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    form = ProductAdminForm
     list_display = ("product_name", "category", "default_price", "product_key", "publish")
     list_filter = ('category', 'brand', 'material', 'product_type' )
     fieldsets = (
