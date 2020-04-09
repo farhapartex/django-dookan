@@ -92,9 +92,8 @@ class ProductAdmin(admin.ModelAdmin):
         ("Optional Information", {
             'classes': ('collapse',),
             'fields': (
-                ('model','weight', 'unit'),
-                ('size', 'material', ),
-                ('discount_percentage', 'discount_price',),
+                ('model','weight', 'unit','size'),
+                ('material','discount_percentage', 'discount_price',),
                 ('product_key')
             )
         })
@@ -108,3 +107,10 @@ class ProductAdmin(admin.ModelAdmin):
             return obj.name
     
     product_name.short_description = 'Product Name'
+
+
+
+@admin.register(Coupon)
+class CouponAdmin(admin.ModelAdmin):
+    list_display = ("category", "code", "amount", "amount_type", "valid_from", "valit_until")
+    list_filter = ("category", "code", "valid_from", "valit_until")

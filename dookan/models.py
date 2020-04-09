@@ -138,4 +138,16 @@ class Product(Base):
 
         return super().save(*args, **kwargs)
 
-        
+
+AMOUNT_TYPE_CHOICES = (('percentage', 'Percentage'), ('fixed', 'Fixed'))
+class Coupon(Base):
+    category = models.ForeignKey(Category, related_name="coupons", on_delete=models.CASCADE)
+    code = models.CharField(_("Coupon Code"), max_length=15)
+    amount = models.IntegerField()
+    amount_type = models.CharField(_("Amount Type"), choices=AMOUNT_TYPE_CHOICES, default='percentage', max_length=15)
+    valid_from = models.DateField()
+    valit_until = models.DateField()
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.code
