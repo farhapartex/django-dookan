@@ -45,6 +45,13 @@ class Base(models.Model):
         abstract = True
 
 
+class System(Base):
+    name = models.CharField(_("System Name"), max_length=50)
+    logo = models.ForeignKey("dookan.Media", verbose_name=_("System Logo"), related_name="logos", on_delete=models.SET_NULL, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
 
 class Media(Base):
     title = models.CharField(_("Image Title"), max_length=50, blank=True, null=True)
@@ -70,7 +77,7 @@ class Media(Base):
         super(Media, self).save(*args, **kwargs)
     
     def __str__(self):
-        return self.image.name
+        return self.title
 
 
 

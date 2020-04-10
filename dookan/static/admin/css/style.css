@@ -150,3 +150,14 @@ a:link, a:visited {
 .collapse:not(.show) {
     display: block !important;
 }
+
+.btn-outline-dookan{
+    color: #00cca3 !important;
+    border-color: #00cca3 !important;
+}
+
+.btn-outline-dookan:hover{
+    color: #ffffff !important;
+    border-color: #00cca3 !important;
+    background-color: #00cca3 !important;
+}

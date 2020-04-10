@@ -10,6 +10,11 @@ logger = logging.getLogger(__name__)
 
 # Register your models here.
 
+@admin.register(System)
+class SystemAdmin(admin.ModelAdmin):
+    list_display = ("name", "logo", "created_by", "created_at")
+    autocomplete_fields = ['logo']
+
 @admin.register(Media)
 class MediaAdmin(admin.ModelAdmin):
     list_display = ("title", "image","md_image","sm_image", "created_by", "list_image_tag", "action")
