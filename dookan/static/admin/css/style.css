@@ -43,6 +43,13 @@
     width: 800px;
 }
 
+#content-related {
+    float: right;
+    width: 300px;
+    position: relative;
+    margin-right: -350px;
+}
+
 div.breadcrumbs {
     background: #00b38f;
     padding: 10px 40px;
@@ -58,4 +65,8 @@ div.breadcrumbs a {
 
 div.breadcrumbs a:focus, div.breadcrumbs a:hover {
     color: #c4dce8;
+}
+
+.module ul {
+    margin-left: 0;
 }

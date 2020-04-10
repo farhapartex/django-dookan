@@ -57,22 +57,30 @@
 
 {% block sidebar %}
 <div id="content-related">
-    <div class="module" id="recent-actions-module">
-        <h2>{% trans 'Recent actions' %}</h2>
-        <h3>{% trans 'My actions' %}</h3>
+    <div class="module p-2" id="recent-actions-module">
+        <h2>{% trans 'Log Information' %}</h2>
         {% load log %}
         {% get_admin_log 10 as admin_log for_user user %}
         {% if not admin_log %}
         <p>{% trans 'None available' %}</p>
         {% else %}
-        <ul class="actionlist">
+        <ul class="list-group">
             {% for entry in admin_log %}
-            <li
-                class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
+            <li class="list-group-item">
                 {% if entry.is_deletion or not entry.get_admin_url %}
-                {{ entry.object_repr }}
+                {{ entry.object_repr }} <span class="text-danger float-right">Deleted</span>
                 {% else %}
-                <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+
+                {% if entry.object_repr|length > 20 %}
+                {{ entry.object_repr|truncatechars:20 }}
+                {% else %}
+                {{ entry.object_repr }}
+                {% endif %}
+
+                {% if entry.is_addition %}<span class="text-success ml-2"> added</span>{% endif %}
+                {% if entry.is_change %}<span class="text-primary ml-2"> updated</span>{% endif %}
+
+                <a href="{{ entry.get_admin_url }}" class="float-right">Click</a>
                 {% endif %}
                 <br>
                 {% if entry.content_type %}
