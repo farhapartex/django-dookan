@@ -40,14 +40,41 @@
 }
 
 .dashboard #content {
+   width: 600px;
+}
+
+/* PAGE STRUCTURE */
+
+#container {
+    position: relative;
+    width: 100%;
+    min-width: 980px;
+    padding: 0;
+}
+
+#content {
+    padding: 20px 40px;
+}
+
+.dashboard #content {
     width: 800px;
+}
+
+#content-main {
+    float: left;
+    width: 100%;
 }
 
 #content-related {
     float: right;
-    width: 300px;
+    width: 280px;
     position: relative;
-    margin-right: -350px;
+    margin-right: -400px;
+}
+
+#footer {
+    clear: both;
+    padding: 10px;
 }
 
 div.breadcrumbs {
@@ -69,4 +96,25 @@ div.breadcrumbs a:focus, div.breadcrumbs a:hover {
 
 .module ul {
     margin-left: 0;
+}
+
+.module caption {
+    margin: 0;
+    padding: 8px;
+    font-weight: 400;
+    font-size: 13px;
+    text-align: left;
+    background: #00b38f;
+    color: #fff;
+}
+
+.single-app-box{
+    background-color: #ccfff5;
+}
+.single-app-box h5{
+   color: #008066;
+}
+
+.app-box-title a, .app-box-title a:hover{
+    color: #006652;
 }

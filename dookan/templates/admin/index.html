@@ -4,7 +4,7 @@
 {% block extrastyle %}{{ block.super }}
 <link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}">{% endblock %}
 
-{% block coltype %}colMS{% endblock %}
+<!-- {% block coltype %}colMS{% endblock %} -->
 
 {% block bodyclass %}{{ block.super }} dashboard{% endblock %}
 
@@ -14,7 +14,8 @@
 <div id="content-main">
 
     {% if app_list %}
-    {% for app in app_list %}
+
+    <!-- {% for app in app_list %}
     <div class="app-{{ app.app_label }} module">
         <table>
             <caption>
@@ -48,7 +49,36 @@
             {% endfor %}
         </table>
     </div>
-    {% endfor %}
+    {% endfor %} -->
+
+    <div class="container-fluid">
+        {% for app in app_list %}
+        <div class="pt-3 pb-3">
+            <h5 class="app-box-title mb-3">
+                <a href="{{ app.app_url }}" class=""
+                    title="{% blocktrans with name=app.name %}Models in the {{ name }} application{% endblocktrans %}">{{ app.name }}</a>
+            </h5>
+            <div class="row">
+                {% for model in app.models %}
+                <div class="col-md-4 col-lg-4 col-xl-4 mb-3">
+                    <div class="w-100 single-app-box pt-3 pb-3 pl-2 pr-2">
+                        <h6 class="text-center">{{ model.name }}</h6>
+                        <div class="w-100 mx-auto mt-4">
+                            {% if model.add_url %}
+                            <a href="{{ model.add_url }}" class="btn btn-sm btn-outline-primary"><span><i
+                                        class="far fa-plus-square"></i></span> Create</a>
+                            {% endif %}
+                            <a href="{{ model.admin_url }}" class="btn btn-sm btn-outline-warning float-right"><span><i
+                                        class="far fa-edit"></i></span> Update</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
     {% else %}
     <p>{% trans 'You don’t have permission to view or edit anything.' %}</p>
     {% endif %}
@@ -71,15 +101,14 @@
                 {{ entry.object_repr }} <span class="text-danger float-right">Deleted</span>
                 {% else %}
 
-                {% if entry.object_repr|length > 20 %}
-                {{ entry.object_repr|truncatechars:20 }}
+                {% if entry.object_repr|length > 12 %}
+                {{ entry.object_repr|truncatechars:12 }}
                 {% else %}
                 {{ entry.object_repr }}
                 {% endif %}
 
                 {% if entry.is_addition %}<span class="text-success ml-2"> added</span>{% endif %}
                 {% if entry.is_change %}<span class="text-primary ml-2"> updated</span>{% endif %}
-
                 <a href="{{ entry.get_admin_url }}" class="float-right">Click</a>
                 {% endif %}
                 <br>
