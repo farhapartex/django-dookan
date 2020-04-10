@@ -108,6 +108,16 @@ div.breadcrumbs a:focus, div.breadcrumbs a:hover {
     color: #fff;
 }
 
+.module h2, .module caption, .inline-group h2 {
+    margin: 0;
+    padding: 8px;
+    font-weight: 400;
+    font-size: 13px;
+    text-align: left;
+    background: #00b38f;
+    color: #fff;
+}
+
 .single-app-box{
     background-color: #ccfff5;
 }

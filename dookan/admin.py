@@ -12,7 +12,8 @@ logger = logging.getLogger(__name__)
 
 @admin.register(Media)
 class MediaAdmin(admin.ModelAdmin):
-    list_display = ("title", "image","md_image","sm_image", "created_by", "list_image_tag")
+    list_display = ("title", "image","md_image","sm_image", "created_by", "list_image_tag", "action")
+    list_display_links = ('action',)
     fieldsets = (
         ("Required Information", {
             "description": "These fields are required for each Media",
@@ -37,6 +38,9 @@ class MediaAdmin(admin.ModelAdmin):
     
     def list_image_tag(self, obj):
         return format_html('<img src="{}" width="75" height="50"/>'.format(obj.sm_image.url))
+    
+    def action(self, obj):
+        return format_html('{}'.format('Edit'))
 
     image_tag.short_description = 'Image'
     list_image_tag.short_description = 'Image Preview'
@@ -44,40 +48,63 @@ class MediaAdmin(admin.ModelAdmin):
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ("user", "active", "created_by", "created_at")
+    list_display = ("user", "active", "created_by", "created_at", "action")
+    list_display_links = ('action',)
     list_filter = ('created_at', )
     fields = (("user", "active"), "billing_address","same_address", "delivery_address")
     list_per_page=10
 
+    def action(self, obj):
+        return format_html('{}'.format('Edit'))
+
 
 @admin.register(PaymentMethod)
 class PaymentMethodAdmin(admin.ModelAdmin):
-    list_display = ("name", "code", "active", "created_at")
+    list_display = ("name", "code", "active", "created_at", "action")
+    list_display_links = ('action',)
     list_filter = ('code', 'active', 'created_at', )
     fields = (("name", "code"), "active",)
     list_per_page=10
 
+    def action(self, obj):
+        return format_html('{}'.format('Edit'))
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("name", "parent", "publish", "created_by", "created_at")
+    list_display = ("name", "parent", "publish", "created_by", "created_at", "action")
+    list_display_links = ('action',)
     list_filter = ('publish', 'created_at', 'parent', )
     fields = (("parent", "name"), "publish")
     list_per_page=10
 
+    def action(self, obj):
+        return format_html('{}'.format('Edit'))
+        
+
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
-    list_display = ("name", "publish", "created_by", "created_at")
+    list_display = ("name", "publish", "created_by", "created_at", "action")
+    list_display_links = ('action',)
     list_filter = ('publish', 'created_at', 'name', )
     fields = ("name","publish")
     list_per_page=10
 
+    def action(self, obj):
+        return format_html('{}'.format('Edit'))
+
+
+
 @admin.register(ProductType)
 class ProductTypeAdmin(admin.ModelAdmin):
-    list_display = ("name", "created_by", "created_at")
+    list_display = ("name", "created_by", "created_at", "action")
+    list_display_links = ('action',)
     list_filter = ('name', 'created_at', )
     list_per_page=10
+
+    def action(self, obj):
+        return format_html('{}'.format('Edit'))
 
 
 class ProductAdminForm(forms.ModelForm):
@@ -92,7 +119,8 @@ class ProductAdminForm(forms.ModelForm):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     form = ProductAdminForm
-    list_display = ("product_name", "category", "default_price", "product_key", "publish")
+    list_display = ("product_name", "category", "default_price", "product_key", "publish","action")
+    list_display_links = ('action',)
     list_filter = ('category', 'brand', 'material', 'product_type' )
     fieldsets = (
         ("Required Information", {
@@ -122,12 +150,20 @@ class ProductAdmin(admin.ModelAdmin):
         else:
             return obj.name
     
+
+    def action(self, obj):
+        return format_html('{}'.format('Edit'))
+    
     product_name.short_description = 'Product Name'
 
 
 
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):
-    fields = (('category', 'code'), ('amount', 'amount_type'), ('valid_from',), 'valid_until', 'active')
-    list_display = ("category", "code", "amount", "amount_type", "valid_from", "valid_until", "active")
+    fields = (('category', 'code'), ('amount', 'amount_type'), ('valid_from',), 'valid_until', 'active',)
+    list_display_links = ('action',)
+    list_display = ("category", "code", "amount", "amount_type", "valid_from", "valid_until", "active", "action")
     list_filter = ("category", "code", "valid_from", "valid_until")
+
+    def action(self, obj):
+        return format_html('{}'.format('Edit'))
