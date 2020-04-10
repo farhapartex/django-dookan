@@ -1,0 +1,152 @@
+#header {
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    background: #00cca3;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+#branding h1 {
+    padding: 0;
+    margin: 0 20px 0 0;
+    font-weight: 300;
+    font-size: 24px;
+    color: #ffffff;
+}
+
+#branding h1, #branding h1 a:link, #branding h1 a:visited {
+    color: #ffffff;
+}
+
+#header a:link, #header a:visited {
+    color: #006652;
+}
+
+
+#branding h2 {
+    padding: 0 10px;
+    font-size: 14px;
+    margin: -8px 0 8px 0;
+    font-weight: normal;
+    color: #ffc;
+}
+
+#branding a:hover {
+    text-decoration: none;
+}
+
+.dashboard #content {
+   width: 600px;
+}
+
+/* PAGE STRUCTURE */
+
+#container {
+    position: relative;
+    width: 100%;
+    min-width: 980px;
+    padding: 0;
+}
+
+#content {
+    padding: 20px 40px;
+}
+
+.dashboard #content {
+    width: 800px;
+}
+
+#content-main {
+    float: left;
+    width: 100%;
+}
+
+#content-related {
+    float: right;
+    width: 280px;
+    position: relative;
+    margin-right: -400px;
+}
+
+#footer {
+    clear: both;
+    padding: 10px;
+}
+
+div.breadcrumbs {
+    background: #00b38f;
+    padding: 10px 40px;
+    border: none;
+    font-size: 14px;
+    color: #c4dce8;
+    text-align: left;
+}
+
+div.breadcrumbs a {
+    color: #fff;
+}
+
+div.breadcrumbs a:focus, div.breadcrumbs a:hover {
+    color: #c4dce8;
+}
+
+.module ul {
+    margin-left: 0;
+}
+
+.module caption {
+    margin: 0;
+    padding: 8px;
+    font-weight: 400;
+    font-size: 13px;
+    text-align: left;
+    background: #00b38f;
+    color: #fff;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    margin: 0;
+    padding: 8px;
+    font-weight: 400;
+    font-size: 13px;
+    text-align: left;
+    background: #00b38f;
+    color: #fff;
+}
+
+.single-app-box{
+    background-color: #ccfff5;
+}
+.single-app-box h5{
+   color: #008066;
+}
+
+.app-box-title a, .app-box-title a:hover{
+    color: #006652;
+}
+
+.object-tools a:link, .object-tools a:visited {
+    display: block;
+    float: left;
+    padding: 7px 12px;
+    font-weight: 400;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #fff;
+    background-color: #00997a;
+    border-color: #00997a;
+}
+
+a:link, a:visited {
+    color: #00997a;
+    text-decoration: none;
+}
+
+.collapse:not(.show) {
+    display: block !important;
+}

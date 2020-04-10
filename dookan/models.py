@@ -73,6 +73,27 @@ class Media(Base):
         return self.image.name
 
 
+
+class Customer(Base):
+    """docstring for Customer."""
+    user = models.OneToOneField(USER_MODEL, verbose_name=_("User"), related_name="customer", on_delete=models.CASCADE)
+    billing_address = models.TextField(_("Shipping Address"))
+    same_address = models.BooleanField(_("Same address for delivery?"))
+    delivery_address = models.TextField(_("Shipping Address"))
+    active = models.BooleanField(_("ACtive"), default=True)
+
+    def __str__(self, arg):
+        return self.user.username
+
+
+class PaymentMethod(Base):
+    name = models.CharField(_("Payment Method"), max_length=50)
+    code = models.CharField(_("Code"), max_length=50)
+    active = models.BooleanField(_("Active"), default=True)
+
+    def __str__(self):
+        return self.name
+    
 class Category(Base):
     """docstring for Category."""
     name = models.CharField(_("Category Name"), max_length=55)
@@ -151,3 +172,12 @@ class Coupon(Base):
 
     def __str__(self):
         return self.code
+        
+
+class Cart(Base):
+    customer = models.ForeignKey(Customer, verbose_name=_("User"), related_name="cart_users", on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product, verbose_name=_("Items"))
+
+    def __str__(self):
+        return self.user.username
+    
