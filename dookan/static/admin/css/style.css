@@ -128,3 +128,25 @@ div.breadcrumbs a:focus, div.breadcrumbs a:hover {
 .app-box-title a, .app-box-title a:hover{
     color: #006652;
 }
+
+.object-tools a:link, .object-tools a:visited {
+    display: block;
+    float: left;
+    padding: 7px 12px;
+    font-weight: 400;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #fff;
+    background-color: #00997a;
+    border-color: #00997a;
+}
+
+a:link, a:visited {
+    color: #00997a;
+    text-decoration: none;
+}
+
+.collapse:not(.show) {
+    display: block !important;
+}

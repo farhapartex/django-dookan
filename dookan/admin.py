@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 class MediaAdmin(admin.ModelAdmin):
     list_display = ("title", "image","md_image","sm_image", "created_by", "list_image_tag", "action")
     list_display_links = ('action',)
+    search_fields = ['title',]
     fieldsets = (
         ("Required Information", {
             "description": "These fields are required for each Media",
@@ -89,6 +90,7 @@ class BrandAdmin(admin.ModelAdmin):
     list_display_links = ('action',)
     list_filter = ('publish', 'created_at', 'name', )
     fields = ("name","publish")
+    search_fields = ['name']
     list_per_page=10
 
     def action(self, obj):
@@ -122,6 +124,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ("product_name", "category", "default_price", "product_key", "publish","action")
     list_display_links = ('action',)
     list_filter = ('category', 'brand', 'material', 'product_type' )
+    search_fields = ['name',]
+    autocomplete_fields = ['images']
     fieldsets = (
         ("Required Information", {
             "description": "These fields are required for each Product",

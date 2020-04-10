@@ -23,6 +23,10 @@
     {% if LANGUAGE_BIDI %}
     <link rel="stylesheet" type="text/css" href="{% static "admin/css/responsive_rtl.css" %}">{% endif %}
     {% endblock %}
+    {% block jquery %}
+    <script type="text/javascript" src="{% static "admin/js/vendor/jquery/jquery.js" %}"></script>
+    <script type="text/javascript" src="{% static "admin/js/jquery.init.js" %}"></script>
+    {% endblock jquery %}
     {% block blockbots %}
     <meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
 </head>

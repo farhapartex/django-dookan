@@ -8,7 +8,7 @@
 <div class="results">
     <table id="result_list" class="table table-bordered">
         <thead>
-            <tr>
+            <tr class="text-center">
                 {% for header in result_headers %}
                 <th scope="col" {{ header.class_attrib }}>
                     {% if header.sortable %}
@@ -43,7 +43,7 @@
                 <td colspan="{{ result|length }}">{{ result.form.non_field_errors }}</td>
             </tr>
             {% endif %}
-            <tr>
+            <tr class="text-center">
                 {% for item in result %}{{ item }}{% endfor %}
             </tr>
             {% endfor %}
