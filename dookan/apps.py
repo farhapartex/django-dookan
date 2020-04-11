@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from django.contrib.admin.apps import AdminConfig
 
 
 class DookanConfig(AppConfig):
@@ -6,4 +7,3 @@ class DookanConfig(AppConfig):
 
     def ready(self):
         from dookan import signals
-

@@ -1,4 +1,5 @@
 tinymce.init({
-    selector:'textarea',
-    height : "500"
+    selector: 'textarea',
+    width: "780",
+    height: "400"
 });

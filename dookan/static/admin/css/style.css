@@ -150,3 +150,53 @@ a:link, a:visited {
 .collapse:not(.show) {
     display: block !important;
 }
+
+.btn-outline-dookan{
+    color: #00cca3 !important;
+    border-color: #00cca3 !important;
+}
+
+.btn-outline-dookan:hover{
+    color: #ffffff !important;
+    border-color: #00cca3 !important;
+    background-color: #00cca3 !important;
+}
+
+.view-type span{
+    cursor: pointer;
+}
+
+.data-table-view{
+    display: none;
+}
+
+.data-table-view table > th > tr > td{
+    background-color: #008066 !important;
+}
+
+.hide-template{
+    display: none !important;
+}
+
+thead th {
+    padding: 5px 10px;
+    line-height: normal;
+    text-transform: uppercase;
+    background: #04bb96;
+    color: #fff !important;
+}
+
+#changelist table thead th {
+    padding: 0;
+    white-space: nowrap;
+    vertical-align: middle;
+    color: #fff !important;
+}
+
+table thead th .text a:focus, table thead th .text a:hover {
+    background: #04bb96;
+}
+
+thead th a:link, thead th a:visited {
+    color: #fff !important;
+}

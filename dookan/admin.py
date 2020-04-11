@@ -10,6 +10,31 @@ logger = logging.getLogger(__name__)
 
 # Register your models here.
 
+def get_site_info():
+    try:
+        if System.objects.all().count()>0:
+            queryset = System.objects.all()[0]
+            header_title = queryset.name
+            if queryset.logo is not None:
+                logo = queryset.logo
+            else:
+                logo = None
+        return (header_title, logo)
+    except:
+        return ("Dookan", None)
+
+
+
+system_info = get_site_info()
+admin.site.site_header = system_info[0] + " Admin Panel"
+admin.site.index_title = "Dashboard"
+
+@admin.register(System)
+class SystemAdmin(admin.ModelAdmin):
+    list_display = ("name", "logo", "created_by", "created_at")
+    autocomplete_fields = ['logo']
+
+
 @admin.register(Media)
 class MediaAdmin(admin.ModelAdmin):
     list_display = ("title", "image","md_image","sm_image", "created_by", "list_image_tag", "action")
@@ -71,7 +96,7 @@ class PaymentMethodAdmin(admin.ModelAdmin):
         return format_html('{}'.format('Edit'))
 
 
-@admin.register(Category)
+# @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "parent", "publish", "created_by", "created_at", "action")
     list_display_links = ('action',)
@@ -81,7 +106,6 @@ class CategoryAdmin(admin.ModelAdmin):
 
     def action(self, obj):
         return format_html('{}'.format('Edit'))
-        
 
 
 @admin.register(Brand)

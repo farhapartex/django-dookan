@@ -105,6 +105,27 @@
     </div>
     <!-- END Container -->
 
+    <script type='text/javascript'>
+        (function ($) {
+
+            $(document).ready(function () {
+
+                console.log("it is working");
+                $(".table-view").click(function () {
+                    $(".data-grid-view").addClass("hide-template");
+                    $(".data-table-view").css({ "display": "block" })
+                });
+
+                $(".grid-view").click(function () {
+                    $(".data-grid-view").removeClass("hide-template");
+                    $(".data-table-view").css({ "display": "none" })
+                });
+
+            });
+
+        })(django.jQuery);
+    </script>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
