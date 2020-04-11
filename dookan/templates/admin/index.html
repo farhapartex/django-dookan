@@ -12,17 +12,21 @@
 
 {% block content %}
 <div id="content-main">
+    <p class="view-type float-right overflow-hidden">
+        <span class="grid-view"><i class="fas fa-grip-horizontal"></i> Grid View</span> /
+        <span class="table-view"><i class="fas fa-th-list"></i> Table View</span>
+    </p>
 
     {% if app_list %}
 
-    <div class="container-fluid">
+    <div class="container-fluid mt-5">
         {% for app in app_list %}
         <div class="pt-3 pb-3">
             <h5 class="app-box-title mb-3">
                 <a href="{{ app.app_url }}" class=""
                     title="{% blocktrans with name=app.name %}Models in the {{ name }} application{% endblocktrans %}">{{ app.name }}</a>
             </h5>
-            <div class="row">
+            <div class="row data-grid-view">
                 {% for model in app.models %}
                 <div class="col-md-4 col-lg-4 col-xl-4 mb-3">
                     <div class="w-100 single-app-box pt-3 pb-3 pl-3 pr-3">
@@ -38,6 +42,33 @@
                     </div>
                 </div>
                 {% endfor %}
+            </div>
+
+            <div class="data-table-view">
+                <table class="table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">Model Name</th>
+                            <th scope="col">Create Action</th>
+                            <th scope="col">List Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for model in app.models %}
+                        <tr>
+                            <td>{{ model.name }}</td>
+                            <td>
+                                <a href="{{ model.add_url }}"><span><i class="far fa-plus-square"></i></span> Create
+                                    New</a>
+                            </td>
+                            <td>
+                                <a href="{{ model.admin_url }}"><span><i class="far fa-list-alt"></i></span> List
+                                    View</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
         {% endfor %}
