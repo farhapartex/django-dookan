@@ -89,12 +89,19 @@ class Media(Base):
 class Customer(Base):
     """docstring for Customer."""
     user = models.OneToOneField(USER_MODEL, verbose_name=_("User"), related_name="customer", on_delete=models.CASCADE)
+    mobile = models.CharField(_("Mobile Number"), null=True, max_length=20)
     billing_address = models.TextField(_("Shipping Address"))
     same_address = models.BooleanField(_("Same address for delivery?"))
-    delivery_address = models.TextField(_("Shipping Address"))
+    delivery_address = models.TextField(_("Delivery Address"), blank=True, null=True)
     active = models.BooleanField(_("ACtive"), default=True)
 
-    def __str__(self, arg):
+    def save(self, *args, **kwargs):
+        if self.same_address is True or self.delivery_address is None:
+            self.delivery_address = self.billing_address
+
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
         return self.user.username
 
 
@@ -188,8 +195,16 @@ class Coupon(Base):
 
 class Cart(Base):
     customer = models.ForeignKey(Customer, verbose_name=_("User"), related_name="cart_users", on_delete=models.CASCADE)
-    products = models.ManyToManyField(Product, verbose_name=_("Items"))
+    products = models.ManyToManyField(Product,through='CartItem',through_fields=('cart', 'product'), verbose_name=_("Items"))
 
     def __str__(self):
-        return self.user.username
+        return self.customer.user.username
     
+
+class CartItem(Base):
+    cart = models.ForeignKey(Cart, verbose_name=_("Cart"), on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, verbose_name=_("Product"),  on_delete=models.CASCADE)
+    quantity = models.IntegerField(_("Quantity"))
+
+    def __str__(self):
+        return self.cart.customer.user.username

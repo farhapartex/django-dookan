@@ -1,13 +1,15 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.admin import GenericTabularInline
-from .models import *
-from .widgets import *
+from dookan.models import *
+from dookan.widgets import *
 import logging
 
 logger = logging.getLogger(__name__)
-
+USER_MODEL = get_user_model()
 # Register your models here.
 
 def get_site_info():
@@ -28,6 +30,25 @@ def get_site_info():
 system_info = get_site_info()
 admin.site.site_header = system_info[0] + " Admin Panel"
 admin.site.index_title = "Dashboard"
+
+
+class ProductAdminForm(forms.ModelForm):
+    model = Product
+    class Meta:
+        fields = '__all__'
+        widgets = {
+            'description': HtmlEditor(attrs={'style': 'width: 90%; height: 100%;'}),
+        }
+
+
+class CustomerAdminForm(forms.ModelForm):
+    model = Customer
+    class Meta:
+        fields = '__all__'
+        widgets = {
+            'billing_address': HtmlEditor(attrs={'style': 'width: 90%; height: 100%;'}),
+            'delivery_address': HtmlEditor(attrs={'style': 'width: 90%; height: 100%;'}),
+        }
 
 @admin.register(System)
 class SystemAdmin(admin.ModelAdmin):
@@ -74,10 +95,12 @@ class MediaAdmin(admin.ModelAdmin):
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ("user", "active", "created_by", "created_at", "action")
+    form = CustomerAdminForm
+    list_display = ("user", "mobile", "active", "created_by", "action")
     list_display_links = ('action',)
     list_filter = ('created_at', )
-    fields = (("user", "active"), "billing_address","same_address", "delivery_address")
+    search_fields = ['user__username',]
+    fields = (("user", "mobile", "active"),  "billing_address","same_address", "delivery_address")
     list_per_page=10
 
     def action(self, obj):
@@ -96,7 +119,7 @@ class PaymentMethodAdmin(admin.ModelAdmin):
         return format_html('{}'.format('Edit'))
 
 
-# @admin.register(Category)
+@admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "parent", "publish", "created_by", "created_at", "action")
     list_display_links = ('action',)
@@ -131,15 +154,6 @@ class ProductTypeAdmin(admin.ModelAdmin):
 
     def action(self, obj):
         return format_html('{}'.format('Edit'))
-
-
-class ProductAdminForm(forms.ModelForm):
-    model = Product
-    class Meta:
-        fields = '__all__'
-        widgets = {
-            'description': HtmlEditor(attrs={'style': 'width: 90%; height: 100%;'}),
-        }
 
 
 @admin.register(Product)
@@ -186,12 +200,48 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ("id", "customer", "created_by", "created_at", "action")
+    list_display_links = ('action',)
+    list_per_page=10
+
+    def action(self, obj):
+        return format_html('{}'.format('Edit'))
+
+
+@admin.register(CartItem)
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = ("id", "cart", "product_name", "quantity", "total_price", "created_by", "created_at", "action")
+    fields = (('cart', 'product'), 'quantity',)
+    search_fields = ['product__name', 'cart__customer__user__username']
+    list_display_links = ('action',)
+    list_per_page=10
+
+    def action(self, instance):
+        return format_html('{}'.format('Edit'))
+    
+    def product_name(self, instance):
+        return instance.product.name if len(instance.product.name)<=20 else instance.product.name[:20] + "..."
+
+    def total_price(self, instance):
+        product = instance.product
+        if product.discount_price:
+            return product.discount_price * instance.quantity
+        else:
+            return product.default_price * instance.quantity
+    
+    total_price.short_description = 'Total Price'
+    product_name.short_description = 'Product Name'
+
+
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):
     fields = (('category', 'code'), ('amount', 'amount_type'), ('valid_from',), 'valid_until', 'active',)
     list_display_links = ('action',)
     list_display = ("category", "code", "amount", "amount_type", "valid_from", "valid_until", "active", "action")
     list_filter = ("category", "code", "valid_from", "valid_until")
+    list_per_page=10
 
     def action(self, obj):
         return format_html('{}'.format('Edit'))
