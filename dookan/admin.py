@@ -202,13 +202,37 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    list_display = ("id", "customer", "created_by", "created_at")
+    list_display = ("id", "customer", "created_by", "created_at", "action")
+    list_display_links = ('action',)
+    list_per_page=10
+
+    def action(self, obj):
+        return format_html('{}'.format('Edit'))
 
 
 @admin.register(CartItem)
 class CartItemAdmin(admin.ModelAdmin):
-    list_display = ("id", "cart", "product", "quantity", "created_by", "created_at")
+    list_display = ("id", "cart", "product_name", "quantity", "total_price", "created_by", "created_at", "action")
     fields = (('cart', 'product'), 'quantity',)
+    search_fields = ['product__name', 'cart__customer__user__username']
+    list_display_links = ('action',)
+    list_per_page=10
+
+    def action(self, instance):
+        return format_html('{}'.format('Edit'))
+    
+    def product_name(self, instance):
+        return instance.product.name if len(instance.product.name)<=20 else instance.product.name[:20] + "..."
+
+    def total_price(self, instance):
+        product = instance.product
+        if product.discount_price:
+            return product.discount_price * instance.quantity
+        else:
+            return product.default_price * instance.quantity
+    
+    total_price.short_description = 'Total Price'
+    product_name.short_description = 'Product Name'
 
 
 @admin.register(Coupon)
@@ -217,6 +241,7 @@ class CouponAdmin(admin.ModelAdmin):
     list_display_links = ('action',)
     list_display = ("category", "code", "amount", "amount_type", "valid_from", "valid_until", "active", "action")
     list_filter = ("category", "code", "valid_from", "valid_until")
+    list_per_page=10
 
     def action(self, obj):
         return format_html('{}'.format('Edit'))
