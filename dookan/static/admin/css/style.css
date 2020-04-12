@@ -197,6 +197,10 @@ table thead th .text a:focus, table thead th .text a:hover {
     background: #04bb96;
 }
 
+thead th.sorted {
+    background: #04bb96;
+}
+
 thead th a:link, thead th a:visited {
     color: #fff !important;
 }

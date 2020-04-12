@@ -1,13 +1,15 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.admin import GenericTabularInline
 from .models import *
 from .widgets import *
 import logging
 
 logger = logging.getLogger(__name__)
-
+USER_MODEL = get_user_model()
 # Register your models here.
 
 def get_site_info():
@@ -28,6 +30,7 @@ def get_site_info():
 system_info = get_site_info()
 admin.site.site_header = system_info[0] + " Admin Panel"
 admin.site.index_title = "Dashboard"
+
 
 @admin.register(System)
 class SystemAdmin(admin.ModelAdmin):
@@ -184,6 +187,17 @@ class ProductAdmin(admin.ModelAdmin):
     
     product_name.short_description = 'Product Name'
 
+
+
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ("id", "customer", "created_by", "created_at")
+
+
+@admin.register(CartItem)
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = ("id", "cart", "product", "quantity", "created_by", "created_at")
+    fields = (('cart', 'product'), 'quantity',)
 
 
 @admin.register(Coupon)
