@@ -188,8 +188,16 @@ class Coupon(Base):
 
 class Cart(Base):
     customer = models.ForeignKey(Customer, verbose_name=_("User"), related_name="cart_users", on_delete=models.CASCADE)
-    products = models.ManyToManyField(Product, verbose_name=_("Items"))
+    products = models.ManyToManyField(Product,through='CartItem',through_fields=('cart', 'product'), verbose_name=_("Items"))
 
     def __str__(self):
         return self.user.username
     
+
+class CartItem(Base):
+    cart = models.ForeignKey(Cart, verbose_name=_("Cart"), on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, verbose_name=_("Product"),  on_delete=models.CASCADE)
+    quantity = models.IntegerField(_("Quantity"))
+
+    def __str__(self):
+        return self.user.username
