@@ -237,8 +237,11 @@ class CartItemAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ("id", "cart", "cost", "order_confirm", "payment_status", "created_by", "created_at", "action")
-    fields = (('cart', 'payment_method', 'payment_status'), ('cost', 'order_confirm'))
+    list_display = ("id", "cart", "cost", "order_confirm", "payment_status", "order_reference", "created_by", "created_at", "action")
+    fields = (('cart', 'payment_method', 'payment_status'), ('cost', ), 'order_reference', ('order_confirm', 'order_received'))
+    list_filter = ('order_confirm', 'payment_status', )
+    search_fields = ['cart__customer__user__username', 'order_reference' ]
+    readonly_fields=('cost', 'order_reference')
     list_display_links = ('action',)
     list_per_page = 15
 

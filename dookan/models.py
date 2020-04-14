@@ -217,8 +217,13 @@ class Order(Base):
     order_confirm = models.BooleanField(_("Is Order Confirm?"), default=False)
     payment_method = models.ForeignKey(PaymentMethod, related_name="order_payments", on_delete=models.SET_NULL, blank=True, null=True)
     payment_status = models.CharField(_("Payment Status"), choices=PAYMENT_STATUS_CHOICES, max_length=20)
+    order_received = models.BooleanField(_("Is Order Received?"), default=False)
+    order_reference = models.CharField(_("Order Reference"), max_length=40, blank=True, null=True)
 
     def save(self, *args, **kwargs):
+        if self.order_reference is None or self.order_reference == "":
+            self.order_reference = uuid.uuid4()
+
         if self.cost is None or self.cost == 0:
             items = self.cart.cart_items.all()
             for item in items:
@@ -230,4 +235,8 @@ class Order(Base):
                 self.cost += price
 
         super().save(*args, **kwargs)
+    
+
+    def __str__(self):
+        return self.cart.customer.user.username
 
