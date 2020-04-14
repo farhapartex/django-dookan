@@ -235,6 +235,18 @@ class CartItemAdmin(admin.ModelAdmin):
     product_name.short_description = 'Product Name'
 
 
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ("id", "cart", "cost", "order_confirm", "payment_status", "created_by", "created_at", "action")
+    fields = (('cart', 'payment_method', 'payment_status'), ('cost', 'order_confirm'))
+    list_display_links = ('action',)
+    list_per_page = 15
+
+    def action(self, instance):
+        return format_html('{}'.format('Edit'))
+
+
+
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):
     fields = (('category', 'code'), ('amount', 'amount_type'), ('valid_from',), 'valid_until', 'active',)

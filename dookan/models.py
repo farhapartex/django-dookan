@@ -202,7 +202,7 @@ class Cart(Base):
     
 
 class CartItem(Base):
-    cart = models.ForeignKey(Cart, verbose_name=_("Cart"), on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, verbose_name=_("Cart"), related_name="cart_items", on_delete=models.CASCADE)
     product = models.ForeignKey(Product, verbose_name=_("Product"),  on_delete=models.CASCADE)
     quantity = models.IntegerField(_("Quantity"))
 
@@ -213,6 +213,21 @@ class CartItem(Base):
 PAYMENT_STATUS_CHOICES = (('paid','Paid'), ('half-paid', 'Half Paid'), ('not-paid', 'Not Paid'))
 class Order(Base):
     cart = models.ForeignKey(Cart, related_name="orders", on_delete=models.CASCADE)
+    cost = models.DecimalField(_("Total Price"), max_digits=12, decimal_places=2, default=0, null=True)
     order_confirm = models.BooleanField(_("Is Order Confirm?"), default=False)
     payment_method = models.ForeignKey(PaymentMethod, related_name="order_payments", on_delete=models.SET_NULL, blank=True, null=True)
     payment_status = models.CharField(_("Payment Status"), choices=PAYMENT_STATUS_CHOICES, max_length=20)
+
+    def save(self, *args, **kwargs):
+        if self.cost is None or self.cost == 0:
+            items = self.cart.cart_items.all()
+            for item in items:
+                if item.product.discount_price:
+                    price = item.product.discount_price * item.quantity
+                else:
+                    price = item.product.default_price * item.quantity
+                
+                self.cost += price
+
+        super().save(*args, **kwargs)
+
