@@ -208,3 +208,11 @@ class CartItem(Base):
 
     def __str__(self):
         return self.cart.customer.user.username
+
+
+PAYMENT_STATUS_CHOICES = (('paid','Paid'), ('half-paid', 'Half Paid'), ('not-paid', 'Not Paid'))
+class Order(Base):
+    cart = models.ForeignKey(Cart, related_name="orders", on_delete=models.CASCADE)
+    order_confirm = models.BooleanField(_("Is Order Confirm?"), default=False)
+    payment_method = models.ForeignKey(PaymentMethod, related_name="order_payments", on_delete=models.SET_NULL, blank=True, null=True)
+    payment_status = models.CharField(_("Payment Status"), choices=PAYMENT_STATUS_CHOICES, max_length=20)
