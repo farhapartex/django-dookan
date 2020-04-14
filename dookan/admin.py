@@ -235,6 +235,21 @@ class CartItemAdmin(admin.ModelAdmin):
     product_name.short_description = 'Product Name'
 
 
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ("id", "cart", "cost", "order_confirm", "payment_status", "order_reference", "created_by", "created_at", "action")
+    fields = (('cart', 'payment_method', 'payment_status'), ('cost', ), 'order_reference', ('order_confirm', 'order_received'))
+    list_filter = ('order_confirm', 'payment_status', )
+    search_fields = ['cart__customer__user__username', 'order_reference' ]
+    readonly_fields=('cost', 'order_reference')
+    list_display_links = ('action',)
+    list_per_page = 15
+
+    def action(self, instance):
+        return format_html('{}'.format('Edit'))
+
+
+
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):
     fields = (('category', 'code'), ('amount', 'amount_type'), ('valid_from',), 'valid_until', 'active',)
