@@ -1,3 +1,7 @@
+html, body{
+    background-color: #f2f2f2 !important;
+}
+
 #header {
     width: auto;
     height: auto;
@@ -5,8 +9,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 40px;
-    background: #00cca3;
-    color: #ffffff;
+    background: #1a1a1a;
+    color: #cfcfcf;
     overflow: hidden;
 }
 
@@ -15,15 +19,15 @@
     margin: 0 20px 0 0;
     font-weight: 300;
     font-size: 24px;
-    color: #ffffff;
+    color: #cfcfcf;
 }
 
 #branding h1, #branding h1 a:link, #branding h1 a:visited {
-    color: #ffffff;
+    color: #cfcfcf;
 }
 
 #header a:link, #header a:visited {
-    color: #006652;
+    color: #cfcfcf;
 }
 
 
@@ -119,14 +123,14 @@ div.breadcrumbs a:focus, div.breadcrumbs a:hover {
 }
 
 .single-app-box{
-    background-color: #ccfff5;
+    background-color: #0099cc;
 }
 .single-app-box h5{
    color: #008066;
 }
 
 .app-box-title a, .app-box-title a:hover{
-    color: #006652;
+    color: #151616 !important;
 }
 
 .object-tools a:link, .object-tools a:visited {
@@ -152,14 +156,25 @@ a:link, a:visited {
 }
 
 .btn-outline-dookan{
-    color: #00cca3 !important;
-    border-color: #00cca3 !important;
+    color: #101111 !important;
+    border-color: #101111 !important;
 }
 
 .btn-outline-dookan:hover{
     color: #ffffff !important;
     border-color: #00cca3 !important;
     background-color: #00cca3 !important;
+}
+
+.btn-outline-dookan-list{
+    color: #e65c00 !important;
+    border-color: #e65c00 !important;
+}
+
+.btn-outline-dookan-list:hover{
+    color: #ffffff !important;
+    border-color: #cc5200 !important;
+    background-color: #cc5200 !important;
 }
 
 .view-type span{
@@ -171,7 +186,7 @@ a:link, a:visited {
 }
 
 .data-table-view table > th > tr > td{
-    background-color: #008066 !important;
+    background-color: #161818 !important;
 }
 
 .hide-template{
@@ -182,7 +197,7 @@ thead th {
     padding: 5px 10px;
     line-height: normal;
     text-transform: uppercase;
-    background: #04bb96;
+    background: #161818;
     color: #fff !important;
 }
 
@@ -194,13 +209,20 @@ thead th {
 }
 
 table thead th .text a:focus, table thead th .text a:hover {
-    background: #04bb96;
+    background: #161818;
 }
 
 thead th.sorted {
-    background: #04bb96;
+    background: #161818;
 }
 
 thead th a:link, thead th a:visited {
     color: #fff !important;
 }
+
+/* .table-bordered th {
+    border: 1px solid #dee2e6 !important;
+}
+.table-bordered td {
+    border: 1px solid #161818 !important;
+} */
