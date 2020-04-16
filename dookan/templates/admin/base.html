@@ -89,17 +89,50 @@
         {% endblock messages %}
 
         <!-- Content -->
-        <div id="content" class="{% block coltype %}colM{% endblock %}">
-            {% block pretitle %}{% endblock %}
-            {% block content_title %}{% if title %}<h4 class="pl-3 pt-3 pb-3">{{ title }}</h4>{% endif %}{% endblock %}
-            {% block content %}
-            {% block object-tools %}{% endblock %}
-            {{ content }}
-            {% endblock %}
-            {% block sidebar %}{% endblock %}
-            <br class="clear">
-        </div>
+        
         <!-- END Content -->
+
+
+        <!-- New designed Content -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2 col-lg-2 col-xl-2">
+                    <div class="w-100 mt-2 model-list-sidebar overflow-hidden">
+                        <!-- <ul class="list-group ">
+                            <li class="list-group-item sidebar-nav-li"><a href="{{ model.admin_url }}"><span class="mr-2"><i class="fas fa-tachometer-alt"></i></span> <b>Dashboard</b></a></li>
+                        </ul> -->
+                        <p class="pt-3 pl-3 mt-3  ml-2 app_caption">
+                            <a href="#"><span class="mr-2"><i class="fas fa-tachometer-alt"></i></span> <b>Dashboard</b></a>
+                        </p>
+                        {% if app_list %}
+                        {% for app in app_list %}
+                            <p class="pl-3 ml-2 app_caption"><b>{{ app.name }}</b></p>
+                            <ul class="list-group list-group-flush shadow pl-3 pr-3 pt-2 pb-2 mb-2 rounded">
+                                {% for model in app.models %}
+                                    <li class="list-group-item sidebar-nav-li"><a href="{{ model.admin_url }}"><span class="mr-2"><i class="fas fa-hashtag"></i></span> <b>{{ model.name }}</b></a></li>
+                                {% endfor %}
+                            </ul>
+                        {% endfor %}
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-10 col-lg-10 col-xl-10">
+                    <div class="w-100">
+                        <div class="w-100">
+                            {% block pretitle %}{% endblock %}
+                            {% block content_title %}{% if title %}<h4 class="pl-3 pt-3 pb-3">{{ title }}</h4>{% endif %}{% endblock %}
+                        </div>
+                        <div class="content-box w-100">
+                            {% block content %}
+                            {% block object-tools %}{% endblock %}
+                            {{ content }}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END New designed Content -->
 
         {% block footer %}<div id="footer"></div>{% endblock %}
     </div>

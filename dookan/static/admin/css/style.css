@@ -1,5 +1,5 @@
 html, body{
-    background-color: #f2f2f2 !important;
+    background-color: #ecf6ff !important;
 }
 
 #header {
@@ -9,8 +9,8 @@ html, body{
     justify-content: space-between;
     align-items: center;
     padding: 10px 40px;
-    background: #1a1a1a;
-    color: #cfcfcf;
+    background: #fff;
+    color: #0c0b0b;
     overflow: hidden;
 }
 
@@ -19,15 +19,15 @@ html, body{
     margin: 0 20px 0 0;
     font-weight: 300;
     font-size: 24px;
-    color: #cfcfcf;
+    color: #0c0b0b;
 }
 
 #branding h1, #branding h1 a:link, #branding h1 a:visited {
-    color: #cfcfcf;
+    color: #0c0b0b;
 }
 
 #header a:link, #header a:visited {
-    color: #cfcfcf;
+    color: #0c0b0b;
 }
 
 
@@ -36,7 +36,7 @@ html, body{
     font-size: 14px;
     margin: -8px 0 8px 0;
     font-weight: normal;
-    color: #ffc;
+    color: #0c0b0b;
 }
 
 #branding a:hover {
@@ -226,3 +226,29 @@ thead th a:link, thead th a:visited {
 .table-bordered td {
     border: 1px solid #161818 !important;
 } */
+
+.app_caption, .app_caption a{
+    /* background-color: #c7e1f7; */
+    color: #e2e8f0 !important;
+}
+
+.model-list-sidebar{
+    background-color: #1a202e;
+}
+
+.sidebar-nav-li a{
+    display: block;
+    text-decoration: none !important;
+    color: #a6a6a6;
+}
+
+.sidebar-nav-li{
+    background-color: #1a202e !important;
+    border-top: 1px solid #1a202e !important;
+    border-bottom: 1px solid #1a202e !important;
+}
+
+.sidebar-nav-li:hover a{
+    /* background-color: #c7e1f7; */
+    color: #e2e8f0;
+}
