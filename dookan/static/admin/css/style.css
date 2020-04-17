@@ -323,3 +323,7 @@ thead th a:link, thead th a:visited {
     padding-bottom: 5px;
     font-size: 15px !important;
 }
+
+.summary-box > p > a{
+    padding: 0px !important;
+}
