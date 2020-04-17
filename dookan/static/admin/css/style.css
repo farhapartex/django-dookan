@@ -327,3 +327,8 @@ thead th a:link, thead th a:visited {
 .summary-box > p > a{
     padding: 0px !important;
 }
+
+.dash-half-box{
+    background-color: #fff;
+    padding: 18px 15px;
+}

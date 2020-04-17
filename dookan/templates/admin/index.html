@@ -62,6 +62,85 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12">
+                <div class="w-100 dash-half-box">
+                    <h2>{% trans 'Recent Activities' %}</h2>
+                    {% load log %}
+                    {% get_admin_log 7 as admin_log for_user user %}
+                    {% if not admin_log %}
+                    <p>{% trans 'None available' %}</p>
+                    {% else %}
+                    <ul class="list-group list-group-flush">
+                        {% for entry in admin_log %}
+                        <li class="list-group-item">
+                            {% if entry.is_deletion or not entry.get_admin_url %}
+                            {{ entry.object_repr }} <span class="text-danger float-right">Deleted</span>
+                            {% else %}
+
+                            {% if entry.object_repr|length > 30 %}
+                            {{ entry.object_repr|truncatechars:30 }}
+                            {% else %}
+                            {{ entry.object_repr }}
+                            {% endif %}
+
+                            {% if entry.is_addition %}<span class="text-success ml-2"> added</span>{% endif %}
+                            {% if entry.is_change %}<span class="text-primary ml-2"> updated</span>{% endif %}
+                            <a href="{{ entry.get_admin_url }}" class="float-right">Click</a>
+                            {% endif %}
+                            <br>
+                            {% if entry.content_type %}
+                            <span class="mini quiet">{% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}</span>
+                            {% else %}
+                            <span class="mini quiet">{% trans 'Unknown content' %}</span>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12">
+                <div class="w-100 dash-half-box">
+                    <h5>Recent Orders</h5>
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Refernce</th>
+                            <th scope="col">Invoice</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">112-k</th>
+                            <td>INV-245784</td>
+                            <td>Md Nazmul Hasan</td>
+                            <td><span class="text-primary">Pending</span></td>
+                            <td>2580</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">112-k</th>
+                            <td>INV-245784</td>
+                            <td>Md Nazmul Hasan</td>
+                            <td><span class="text-success">Paid</span></td>
+                            <td>2580</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">112-k</th>
+                            <td>INV-245784</td>
+                            <td>Md Nazmul Hasan</td>
+                            <td><span class="text-danger">Canceld</span></td>
+                            <td>2580</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     {% else %}
