@@ -247,6 +247,7 @@ thead th a:link, thead th a:visited {
     background-color: #1a202e !important;
     border-top: 1px solid #1a202e !important;
     border-bottom: 1px solid #1a202e !important;
+    font-size: 18px !important;
 }
 
 .sidebar-nav-li:hover a{
@@ -303,4 +304,15 @@ thead th a:link, thead th a:visited {
     display: block;
     color:#e2e8f0 !important;
     padding: 10px 15px;
+}
+
+.sidebar-list-submenu{
+    list-style: none !important;
+    display: none;
+}
+
+.sidebar-list-submenu > li{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 15px !important;
 }
