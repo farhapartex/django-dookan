@@ -230,6 +230,7 @@ thead th a:link, thead th a:visited {
 .app_caption, .app_caption a{
     /* background-color: #c7e1f7; */
     color: #e2e8f0 !important;
+    text-decoration: none !important;
 }
 
 .model-list-sidebar{
