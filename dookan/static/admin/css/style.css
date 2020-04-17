@@ -1,5 +1,6 @@
 html, body{
     background-color: #ecf6ff !important;
+    height: 100%;
 }
 
 #header {
@@ -233,8 +234,13 @@ thead th a:link, thead th a:visited {
     text-decoration: none !important;
 }
 
+.app-sidebar{
+    min-height: calc(100vh - 50px);
+}
+
 .model-list-sidebar{
     background-color: #1a202e;
+    min-height: calc(100vh - 50px);
 }
 
 .sidebar-nav-li a{
@@ -248,6 +254,7 @@ thead th a:link, thead th a:visited {
     border-top: 1px solid #1a202e !important;
     border-bottom: 1px solid #1a202e !important;
     font-size: 18px !important;
+    padding: 1.05rem 1.25rem !important;
 }
 
 .sidebar-nav-li:hover a{
