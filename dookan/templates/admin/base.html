@@ -46,8 +46,16 @@
             </div>
             {% block usertools %}
             {% if has_permission %}
-            <div id="user-tools">
-                {% block welcome-msg %}
+            <div id="user-tools"  class="position-relative">
+                <img src="{% static 'admin/images/basic-user.png' %}" class="img-thumbnail rounded-circle user-thumbnail" alt="Basic User">
+                
+                  <ul class="user-tool-dropwdown">
+                    <li><a href="#">Hello one</a></li>
+                    <li><a href="#">Hello two</a></li>
+                    <li><a href="#">Hello two</a></li>
+                    <li><a href="#">Hello two</a></li>
+                  </ul>
+                <!-- {% block welcome-msg %}
                 {% trans 'Welcome,' %}
                 <strong>{% firstof user.get_short_name user.get_username %}</strong>.
                 {% endblock %}
@@ -65,7 +73,7 @@
                 <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
                 {% endif %}
                 <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
-                {% endblock %}
+                {% endblock %} -->
             </div>
             {% endif %}
             {% endblock %}
@@ -97,7 +105,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-2 col-lg-2 col-xl-2">
-                    <div class="w-100 mt-2 model-list-sidebar overflow-hidden">
+                    <div class="w-100 model-list-sidebar overflow-hidden">
                         <!-- <ul class="list-group ">
                             <li class="list-group-item sidebar-nav-li"><a href="{{ model.admin_url }}"><span class="mr-2"><i class="fas fa-tachometer-alt"></i></span> <b>Dashboard</b></a></li>
                         </ul> -->
@@ -107,7 +115,7 @@
                         {% if app_list %}
                         {% for app in app_list %}
                             <p class="pl-3 ml-2 app_caption"><b>{{ app.name }}</b></p>
-                            <ul class="list-group list-group-flush shadow pl-3 pr-3 pt-2 pb-2 mb-2 rounded">
+                            <ul class="list-group list-group-flush pl-3 pr-3 pt-2 pb-2 mb-2">
                                 {% for model in app.models %}
                                     <li class="list-group-item sidebar-nav-li"><a href="{{ model.admin_url }}"><span class="mr-2"><i class="fas fa-hashtag"></i></span> <b>{{ model.name }}</b></a></li>
                                 {% endfor %}
@@ -152,6 +160,10 @@
                 $(".grid-view").click(function () {
                     $(".data-grid-view").removeClass("hide-template");
                     $(".data-table-view").css({ "display": "none" })
+                });
+
+                $(".user-thumbnail").click(function(){
+                    $(".user-tool-dropwdown").toggle(350);
                 });
 
             });
