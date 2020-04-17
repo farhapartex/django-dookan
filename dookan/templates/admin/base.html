@@ -118,33 +118,34 @@
                             <li class="list-group-item sidebar-nav-li">
                                 <a href="#"><span class="mr-2"><i class="fas fa-image"></i></span> <span>Media</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
                                 <ul class="sidebar-list-submenu mt-3">
-                                    <li><a href="#"><span class="mr-3"><i class="far fa-plus-square"></i></span> <span>Create</span></a></li>
-                                    <li><a href="#"><span class="mr-3"><i class="fas fa-th-list"></i></span> <span>List</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_media_add' %}"><span class="mr-3"><i class="far fa-plus-square"></i></span> <span>Create</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_media_changelist' %}"><span class="mr-3"><i class="fas fa-th-list"></i></span> <span>List</span></a></li>
                                 </ul>
                             </li>
                             <li class="list-group-item sidebar-nav-li">
                                 <a href="#"><span class="mr-2"><i class="fas fa-box-open"></i></span> <span>Product</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
                                 <ul class="sidebar-list-submenu mt-3">
-                                    <li><a href="#"><span class="mr-3"><i class="fas fa-th"></i></span> <span>Category</span></a></li>
-                                    <li><a href="#"><span class="mr-3"><i class="fab fa-bandcamp"></i></span> <span>Brand</span></a></li>
-                                    <li><a href="#"><span class="mr-3"><i class="fab fa-bandcamp"></i></span> <span>Product</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_category_changelist' %}"><span class="mr-3"><i class="fas fa-th"></i></span> <span>Category</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_brand_changelist' %}"><span class="mr-3"><i class="fab fa-bandcamp"></i></span> <span>Brand</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_producttype_changelist' %}"><span class="mr-3"><i class="fas fa-grip-vertical"></i></span> <span>Product Type</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_product_changelist' %}"><span class="mr-3"><i class="fab fa-bandcamp"></i></span> <span>Product</span></a></li>
                                 </ul>
                             </li>
                             <li class="list-group-item sidebar-nav-li">
                                 <a href="#"><span class="mr-2"><i class="fas fa-luggage-cart"></i></span> <span>Order & Cart</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
                                 <ul class="sidebar-list-submenu mt-3">
-                                    <li><a href="#"><span class="mr-3"><i class="fas fa-shopping-cart"></i></span> <span>Cart</span></a></li>
-                                    <li><a href="#"><span class="mr-3"><i class="fas fa-cart-plus"></i></span> <span>Cart Item</span></a></li>
-                                    <li><a href="#"><span class="mr-3"><i class="fab fa-first-order"></i></span> <span>Order</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_cart_changelist' %}"><span class="mr-3"><i class="fas fa-shopping-cart"></i></span> <span>Cart</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_cartitem_changelist' %}"><span class="mr-3"><i class="fas fa-cart-plus"></i></span> <span>Cart Item</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_order_changelist' %}"><span class="mr-3"><i class="fab fa-first-order"></i></span> <span>Order</span></a></li>
                                 </ul>
                             </li>
                             <li class="list-group-item sidebar-nav-li">
                                 <a href="#"><span class="mr-2"><i class="fas fa-cogs"></i></span> <span>Settings</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
                                 <ul class="sidebar-list-submenu mt-3">
-                                    <li><a href="#"><span class="mr-3"><i class="fas fa-users"></i></span> <span>User</span></a></li>
-                                    <li><a href="#"><span class="mr-3"><i class="fas fa-user-shield"></i></span> <span>Customer</span></a></li>
-                                    <li><a href="#"><span class="mr-3"><i class="fas fa-dharmachakra"></i></span> <span>System</span></a></li>
-                                    <li><a href="#"><span class="mr-3"><i class="fab fa-renren"></i></span> <span>User Role</span></a></li>
+                                    <li><a href="{% url 'admin:auth_user_changelist' %}"><span class="mr-3"><i class="fas fa-users"></i></span> <span>User</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_customer_changelist' %}"><span class="mr-3"><i class="fas fa-user-shield"></i></span> <span>Customer</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_system_changelist' %}"><span class="mr-3"><i class="fas fa-dharmachakra"></i></span> <span>System</span></a></li>
+                                    <li><a href="{% url 'admin:auth_group_changelist' %}"><span class="mr-3"><i class="fab fa-renren"></i></span> <span>User Role</span></a></li>
                                 </ul>
                             </li>
                         </ul>
