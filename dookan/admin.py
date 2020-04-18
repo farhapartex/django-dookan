@@ -125,6 +125,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display_links = ('action',)
     list_filter = ('publish', 'created_at', 'parent', )
     fields = (("parent", "name"), "publish")
+    search_fields = ['name',]
     list_per_page=10
 
     def action(self, obj):
