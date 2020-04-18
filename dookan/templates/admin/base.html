@@ -40,7 +40,7 @@
 
         {% if not is_popup %}
         <!-- Header -->
-        <div id="header" class="shadow pl-3 pr-3 pt-4 pb-4  rounded sticky-top">
+        <div id="header" class="shadow pl-3 pr-3 pt-3 pb-3  rounded sticky-top">
             <div id="branding">
                 {% block branding %}{% endblock %}
             </div>
@@ -111,10 +111,10 @@
                         <!-- <ul class="list-group ">
                             <li class="list-group-item sidebar-nav-li"><a href="{{ model.admin_url }}"><span class="mr-2"><i class="fas fa-tachometer-alt"></i></span> <b>Dashboard</b></a></li>
                         </ul> -->
-                        <p class="pt-3 pl-3 mt-3  ml-2 app_caption">
-                            <a href="{% url 'admin:index' %}"><span class="mr-2"><i class="fas fa-tachometer-alt"></i></span> <b>{% trans 'Dashboard' %}</b></a>
-                        </p>
                         <ul class="list-group list-group-flush pl-3 pr-3 pt-2 pb-2 mb-2">
+                            <li class="list-group-item sidebar-nav-li">
+                                <a href="{% url 'admin:index' %}"><span class="mr-2"><i class="fas fa-tachometer-alt"></i></span> <b>{% trans 'Dashboard' %}</b></a>
+                            </li>
                             <li class="list-group-item sidebar-nav-li">
                                 <a href="#"><span class="mr-2"><i class="fas fa-image"></i></span> <span>Media</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
                                 <ul class="sidebar-list-submenu mt-3">

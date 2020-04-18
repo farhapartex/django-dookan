@@ -9,8 +9,8 @@ html, body{
     /* display: flex; */
     justify-content: space-between;
     align-items: center;
-    padding: 10px 30px;
-    background: #fff;
+    padding: 7px 30px;
+    background: rgb(228, 228, 228);
     color: #0c0b0b;
     overflow: visible !important;
 }
@@ -83,7 +83,7 @@ html, body{
 }
 
 div.breadcrumbs {
-    background: #00b38f;
+    background: #25314b;
     padding: 10px 40px;
     border: none;
     font-size: 14px;
@@ -143,12 +143,12 @@ div.breadcrumbs a:focus, div.breadcrumbs a:hover {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: #fff;
-    background-color: #00997a;
-    border-color: #00997a;
+    background-color: #25314b;
+    border-color: #25314b;
 }
 
 a:link, a:visited {
-    color: #00997a;
+    color: #25314b;
     text-decoration: none;
 }
 
@@ -158,13 +158,13 @@ a:link, a:visited {
 
 .btn-outline-dookan{
     color: #101111 !important;
-    border-color: #101111 !important;
+    border-color: #25314b !important;
 }
 
 .btn-outline-dookan:hover{
     color: #ffffff !important;
-    border-color: #00cca3 !important;
-    background-color: #00cca3 !important;
+    border-color: #25314b !important;
+    background-color: #25314b !important;
 }
 
 .btn-outline-dookan-list{
@@ -187,7 +187,7 @@ a:link, a:visited {
 }
 
 .data-table-view table > th > tr > td{
-    background-color: #161818 !important;
+    background-color: #ec7734 !important;
 }
 
 .hide-template{
@@ -198,7 +198,7 @@ thead th {
     padding: 5px 10px;
     line-height: normal;
     text-transform: uppercase;
-    background: #161818;
+    background: #e7530ea1;
     color: #fff !important;
 }
 
@@ -210,11 +210,11 @@ thead th {
 }
 
 table thead th .text a:focus, table thead th .text a:hover {
-    background: #161818;
+    background: #e26f39a1;
 }
 
 thead th.sorted {
-    background: #161818;
+    background: #e26f39a1;
 }
 
 thead th a:link, thead th a:visited {

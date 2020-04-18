@@ -77,7 +77,7 @@ class MediaAdmin(admin.ModelAdmin):
         })
     )
     readonly_fields = ('image_tag',)
-    list_per_page=10
+    list_per_page=5
     
 
     def image_tag(self, obj):
