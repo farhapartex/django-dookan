@@ -82,12 +82,15 @@
             {% block nav-global %}{% endblock %}
         </div>
         <!-- END Header -->
+        {% if user.is_authenticated %}
         {% block breadcrumbs %}
         <div class="breadcrumbs ">
             <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
             {% if title %} &rsaquo; {{ title }}{% endif %}
         </div>
         {% endblock %}
+        {% endif %}
+
         {% endif %}
 
         {% block messages %}
@@ -106,11 +109,13 @@
         <!-- New designed Content -->
         <div class="container-fluid" id="appBaseContainer">
             <div class="row">
+                {% if user.is_authenticated %}
                 <div class="col-md-2 col-lg-2 col-xl-2 app-sidebar position-fixed" id="sticky-sidebar">
                     <div class="w-100 model-list-sidebar overflow-hidden">
                         <!-- <ul class="list-group ">
                             <li class="list-group-item sidebar-nav-li"><a href="{{ model.admin_url }}"><span class="mr-2"><i class="fas fa-tachometer-alt"></i></span> <b>Dashboard</b></a></li>
                         </ul> -->
+                        
                         <ul class="list-group list-group-flush pl-3 pr-3 pt-2 pb-2 mb-2">
                             <li class="list-group-item sidebar-nav-li">
                                 <a href="{% url 'admin:index' %}"><span class="mr-2"><i class="fas fa-tachometer-alt"></i></span> <b>{% trans 'Dashboard' %}</b></a>
@@ -149,9 +154,11 @@
                                 </ul>
                             </li>
                         </ul>
+                        
                     </div>
                 </div>
-                <div class="col-md-10 col-lg-10 col-xl-10 offset-2" id="main">
+                {% endif %}
+                <div class="{% if user.is_authenticated %}col-md-10 col-lg-10 col-xl-10 offset-2{% else %} col-md-12 col-lg-12 col-xl-12 {% endif %}" id="main">
                     <div class="w-100">
                         <div class="w-100">
                             {% block pretitle %}{% endblock %}

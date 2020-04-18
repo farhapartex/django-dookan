@@ -283,7 +283,7 @@ thead th a:link, thead th a:visited {
     top: 100%;
     right: 0px;
     width: 180px;
-    z-index: 1000;
+    z-index: 9999;
     text-align: left;
     background-color: #324164;
     padding: 0px !important;
