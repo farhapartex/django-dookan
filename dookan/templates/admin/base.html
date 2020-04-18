@@ -36,7 +36,7 @@
     data-admin-utc-offset="{% now "Z" %}">
 
     <!-- Container -->
-    <div id="container">
+    <div id="container" class="position-relative">
 
         {% if not is_popup %}
         <!-- Header -->
@@ -83,7 +83,7 @@
         </div>
         <!-- END Header -->
         {% block breadcrumbs %}
-        <div class="breadcrumbs">
+        <div class="breadcrumbs position-fixed">
             <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
             {% if title %} &rsaquo; {{ title }}{% endif %}
         </div>
