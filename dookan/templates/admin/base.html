@@ -40,6 +40,7 @@
 
         {% if not is_popup %}
         <!-- Header -->
+        {% if user.is_authenticated %}
         <div id="header" class="shadow pl-3 pr-3 pt-3 pb-3  rounded sticky-top">
             <div id="branding">
                 {% block branding %}{% endblock %}
@@ -81,6 +82,7 @@
             {% endblock %}
             {% block nav-global %}{% endblock %}
         </div>
+        {% endif %}
         <!-- END Header -->
         {% if user.is_authenticated %}
         {% block breadcrumbs %}
@@ -159,11 +161,13 @@
                 </div>
                 {% endif %}
                 <div class="{% if user.is_authenticated %}col-md-10 col-lg-10 col-xl-10 offset-2{% else %} col-md-12 col-lg-12 col-xl-12 {% endif %}" id="main">
-                    <div class="w-100">
+                    <div class="w-100 overflow-hidden">
+                        {% if user.is_authenticated %}
                         <div class="w-100">
                             {% block pretitle %}{% endblock %}
                             {% block content_title %}{% if title %}<h4 class="pl-3 pt-3 pb-3">{{ title }}</h4>{% endif %}{% endblock %}
                         </div>
+                        {% endif %}
                         <div class="content-box w-100">
                             {% block content %}
                             {% block object-tools %}{% endblock %}
@@ -185,7 +189,11 @@
 
             $(document).ready(function () {
 
-                console.log("it is working");
+                // console.log("it is working");
+                // adding bootstrap form class to inputs
+                $(".form-group").children("input[type='text'], input[type='password']").addClass("form-control");
+
+
                 $(".table-view").click(function () {
                     $(".data-grid-view").addClass("hide-template");
                     $(".data-table-view").css({ "display": "block" })

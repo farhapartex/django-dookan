@@ -288,19 +288,6 @@ thead th a:link, thead th a:visited {
     background-color: #324164;
     padding: 0px !important;
     display: none;
-    
-    /*
-    float: left;
-    min-width: 10rem;
-    padding: .5rem 0;
-    margin: .125rem 0 0;
-    font-size: 1rem;
-    color: #212529;
-    
-    list-style: none;
-    background-color: rgb(175, 166, 166);
-    background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.15); */
         
 }
 .user-tool-dropwdown li{
@@ -384,4 +371,43 @@ thead th a:link, thead th a:visited {
 
 .containerMargin{
     margin-top: 41px;
+}
+
+
+/* Login CSS */
+
+.login #container {
+    background: none !important;
+    border: none !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    min-width: 300px !important;
+    margin: 100px auto !important;
+}
+
+.login #container #login-content-main{
+    background: #fff !important;
+    /* border: 1px solid #1c2436 !important; */
+    border: none !important;
+    width: 28em !important;
+}
+
+.login-header{
+    background-color: #25314b !important;
+    color: #ffffff !important;
+}
+
+.form-group label {
+    display: inline-block !important;
+    margin-bottom: .5rem !important;
+}
+
+input[type=submit], input[type=button] {
+    background: #25314b !important;
+    border: 1px solid #25314b !important;
+    padding: none !important;
+    border-radius: 4px;
+    color: #fff !important;
+    cursor: pointer !important;
 }
