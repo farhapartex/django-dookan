@@ -41,21 +41,6 @@ class ProductAdminForm(forms.ModelForm):
         }
 
 
-class CustomerAdminForm(forms.ModelForm):
-    model = Customer
-    class Meta:
-        fields = '__all__'
-        widgets = {
-            'billing_address': HtmlEditor(attrs={'style': 'width: 90%; height: 100%;'}),
-            'delivery_address': HtmlEditor(attrs={'style': 'width: 90%; height: 100%;'}),
-        }
-
-@admin.register(System)
-class SystemAdmin(admin.ModelAdmin):
-    list_display = ("name", "logo", "created_by", "created_at")
-    autocomplete_fields = ['logo']
-
-
 @admin.register(Media)
 class MediaAdmin(admin.ModelAdmin):
     list_display = ("title", "image","md_image","sm_image", "created_by", "list_image_tag", "action")
@@ -91,20 +76,6 @@ class MediaAdmin(admin.ModelAdmin):
 
     image_tag.short_description = 'Image'
     list_image_tag.short_description = 'Image Preview'
-
-
-@admin.register(Customer)
-class CustomerAdmin(admin.ModelAdmin):
-    form = CustomerAdminForm
-    list_display = ("user", "mobile", "active", "created_by", "action")
-    list_display_links = ('action',)
-    list_filter = ('created_at', )
-    search_fields = ['user__username',]
-    fields = (("user", "mobile", "active"),  "billing_address","same_address", "delivery_address")
-    list_per_page=10
-
-    def action(self, obj):
-        return format_html('{}'.format('Edit'))
 
 
 @admin.register(PaymentMethod)
