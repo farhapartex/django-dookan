@@ -12,66 +12,135 @@
 
 {% block content %}
 <div id="content-main">
-    <p class="view-type float-right overflow-hidden">
+    <!-- <p class="view-type float-right overflow-hidden">
         <span class="grid-view"><i class="fas fa-grip-horizontal"></i> Grid View</span> /
         <span class="table-view"><i class="fas fa-th-list"></i> Table View</span>
-    </p>
+    </p> -->
 
     {% if app_list %}
 
     <div class="container-fluid mt-5">
-        {% for app in app_list %}
-        <div class="pt-3 pb-3">
-            <h5 class="app-box-title mb-3">
-                <a href="{{ app.app_url }}" class=""
-                    title="{% blocktrans with name=app.name %}Models in the {{ name }} application{% endblocktrans %}">{{ app.name }}</a>
-            </h5>
-            <div class="row data-grid-view">
-                {% for model in app.models %}
-                <div class="col-md-4 col-lg-4 col-xl-4 mb-3">
-                    <div class="w-100 single-app-box pt-3 pb-3 pl-3 pr-3">
-                        <h6 class="text-center">{{ model.name }}</h6>
-                        <div class="w-100 mx-auto mt-4">
-                            {% if model.add_url %}
-                            <a href="{{ model.add_url }}" class="btn btn-sm btn-outline-dookan"><span><i
-                                        class="far fa-plus-square"></i></span> Create</a>
-                            {% endif %}
-                            <a href="{{ model.admin_url }}" class="btn btn-sm btn-outline-warning float-right"><span><i
-                                        class="far fa-list-alt"></i></span> List</a>
-                        </div>
-                    </div>
+        <div class="row">
+            <div class="col-md-3 col-xl-3 col-lg-3">
+                <div class="w-100 shadow p-3 mb-5 bg-white rounded summary-box">
+                    <h3 class="text-center" style="color: tomato;"><span><i class="fas fa-funnel-dollar"></i></span></h3>
+                    <h5 class="text-center">Today's Sales</h5>
+                    <h5 class="text-center">300120</h5>
+                    <p class="mt-3 pt-3 pb-3" style="font-size: 13px;">
+                        <span class="float-left">Last Day: <span><i class="fas fa-dollar-sign"></i></span> 12058</span> <span class="float-right">This week: <span><i class="fas fa-dollar-sign"></i></span> 45865200</span>
+                    </p>
                 </div>
-                {% endfor %}
             </div>
-
-            <div class="data-table-view">
-                <table class="table table-bordered text-center">
-                    <thead>
-                        <tr>
-                            <th scope="col">Model Name</th>
-                            <th scope="col">Create Action</th>
-                            <th scope="col">List Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for model in app.models %}
-                        <tr>
-                            <td>{{ model.name }}</td>
-                            <td>
-                                <a href="{{ model.add_url }}"><span><i class="far fa-plus-square"></i></span> Create
-                                    New</a>
-                            </td>
-                            <td>
-                                <a href="{{ model.admin_url }}"><span><i class="far fa-list-alt"></i></span> List
-                                    View</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <div class="col-md-3 col-xl-3 col-lg-3">
+                <div class="w-100 shadow p-3 mb-5 bg-white rounded summary-box">
+                    <h3 class="text-center" style="color: #862d59;"><span><i class="fas fa-cart-plus"></i></span></h3>
+                    <h5 class="text-center">Ordered Today</h5>
+                    <h5 class="text-center">300</h5>
+                    <p class="pt-3  text-center">
+                        <a href="#"><span class="mr-3">See All Orders</span> <span><i class="fas fa-arrow-right"></i></span></a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3 col-xl-3 col-lg-3">
+                <div class="w-100 shadow p-3 mb-5 bg-white rounded summary-box">
+                    <h3 class="text-center" style="color: #0099cc;"><span><i class="far fa-clock"></i></span></h3>
+                    <h5 class="text-center">Order Pending</h5>
+                    <h5 class="text-center">180</h5>
+                    <p class="pt-3  text-center">
+                        <a href="#"><span class="mr-3">See All Orders</span> <span><i class="fas fa-arrow-right"></i></span></a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3 col-xl-3 col-lg-3">
+                <div class="w-100 shadow p-3 mb-5 bg-white rounded summary-box">
+                    <h3 class="text-center" style="color: #00cc7a;"><span><i class="fas fa-user-tie"></i></span></h3>
+                    <h5 class="text-center">Total Customer</h5>
+                    <h5 class="text-center">57800</h5>
+                    <p class="pt-3  text-center">
+                        <a href="#"><span class="mr-3">See All Customers</span> <span><i class="fas fa-arrow-right"></i></span></a>
+                    </p>
+                </div>
             </div>
         </div>
-        {% endfor %}
+
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12">
+                <div class="w-100 dash-half-box">
+                    <h2>{% trans 'Recent Activities' %}</h2>
+                    {% load log %}
+                    {% get_admin_log 7 as admin_log for_user user %}
+                    {% if not admin_log %}
+                    <p>{% trans 'None available' %}</p>
+                    {% else %}
+                    <ul class="list-group list-group-flush">
+                        {% for entry in admin_log %}
+                        <li class="list-group-item">
+                            {% if entry.is_deletion or not entry.get_admin_url %}
+                            {{ entry.object_repr }} <span class="text-danger float-right">Deleted</span>
+                            {% else %}
+
+                            {% if entry.object_repr|length > 30 %}
+                            {{ entry.object_repr|truncatechars:30 }}
+                            {% else %}
+                            {{ entry.object_repr }}
+                            {% endif %}
+
+                            {% if entry.is_addition %}<span class="text-success ml-2"> added</span>{% endif %}
+                            {% if entry.is_change %}<span class="text-primary ml-2"> updated</span>{% endif %}
+                            <a href="{{ entry.get_admin_url }}" class="float-right">Click</a>
+                            {% endif %}
+                            <br>
+                            {% if entry.content_type %}
+                            <span class="mini quiet">{% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}</span>
+                            {% else %}
+                            <span class="mini quiet">{% trans 'Unknown content' %}</span>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12">
+                <div class="w-100 dash-half-box">
+                    <h5>Recent Orders</h5>
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Refernce</th>
+                            <th scope="col">Invoice</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">112-k</th>
+                            <td>INV-245784</td>
+                            <td>Md Nazmul Hasan</td>
+                            <td><span class="text-primary">Pending</span></td>
+                            <td>2580</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">112-k</th>
+                            <td>INV-245784</td>
+                            <td>Md Nazmul Hasan</td>
+                            <td><span class="text-success">Paid</span></td>
+                            <td>2580</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">112-k</th>
+                            <td>INV-245784</td>
+                            <td>Md Nazmul Hasan</td>
+                            <td><span class="text-danger">Canceld</span></td>
+                            <td>2580</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     {% else %}
@@ -80,42 +149,3 @@
 </div>
 {% endblock %}
 
-{% block sidebar %}
-<div id="content-related">
-    <div class="module p-2" id="recent-actions-module">
-        <h2>{% trans 'Log Information' %}</h2>
-        {% load log %}
-        {% get_admin_log 10 as admin_log for_user user %}
-        {% if not admin_log %}
-        <p>{% trans 'None available' %}</p>
-        {% else %}
-        <ul class="list-group">
-            {% for entry in admin_log %}
-            <li class="list-group-item">
-                {% if entry.is_deletion or not entry.get_admin_url %}
-                {{ entry.object_repr }} <span class="text-danger float-right">Deleted</span>
-                {% else %}
-
-                {% if entry.object_repr|length > 12 %}
-                {{ entry.object_repr|truncatechars:12 }}
-                {% else %}
-                {{ entry.object_repr }}
-                {% endif %}
-
-                {% if entry.is_addition %}<span class="text-success ml-2"> added</span>{% endif %}
-                {% if entry.is_change %}<span class="text-primary ml-2"> updated</span>{% endif %}
-                <a href="{{ entry.get_admin_url }}" class="float-right">Click</a>
-                {% endif %}
-                <br>
-                {% if entry.content_type %}
-                <span class="mini quiet">{% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}</span>
-                {% else %}
-                <span class="mini quiet">{% trans 'Unknown content' %}</span>
-                {% endif %}
-            </li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
-</div>
-{% endblock %}

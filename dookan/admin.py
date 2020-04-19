@@ -125,6 +125,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display_links = ('action',)
     list_filter = ('publish', 'created_at', 'parent', )
     fields = (("parent", "name"), "publish")
+    search_fields = ['name',]
     list_per_page=10
 
     def action(self, obj):
@@ -199,17 +200,24 @@ class ProductAdmin(admin.ModelAdmin):
     product_name.short_description = 'Product Name'
 
 
+class OrderInline(admin.TabularInline):
+    model = Order
+
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
     list_display = ("id", "customer", "created_by", "created_at", "action")
     list_display_links = ('action',)
     list_per_page=10
+    inlines = [
+        OrderInline,
+    ]
 
     def action(self, obj):
         return format_html('{}'.format('Edit'))
 
 
+    
 @admin.register(CartItem)
 class CartItemAdmin(admin.ModelAdmin):
     list_display = ("id", "cart", "product_name", "quantity", "total_price", "created_by", "created_at", "action")

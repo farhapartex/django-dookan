@@ -36,48 +36,63 @@
     data-admin-utc-offset="{% now "Z" %}">
 
     <!-- Container -->
-    <div id="container">
+    <div id="container" class="position-relative h-100">
 
         {% if not is_popup %}
         <!-- Header -->
-        <div id="header">
+        {% if user.is_authenticated %}
+        <div id="header" class="shadow pl-3 pr-3 pt-3 pb-3  rounded sticky-top">
             <div id="branding">
                 {% block branding %}{% endblock %}
             </div>
             {% block usertools %}
             {% if has_permission %}
-            <div id="user-tools">
+            <div id="user-tools"  class="position-relative">
                 {% block welcome-msg %}
                 {% trans 'Welcome,' %}
                 <strong>{% firstof user.get_short_name user.get_username %}</strong>.
                 {% endblock %}
-                {% block userlinks %}
-                {% if site_url %}
-                <a href="{{ site_url }}">{% trans 'View site' %}</a> /
-                {% endif %}
-                {% if user.is_active and user.is_staff %}
-                {% url 'django-admindocs-docroot' as docsroot %}
-                {% if docsroot %}
-                <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
-                {% endif %}
-                {% endif %}
-                {% if user.has_usable_password %}
-                <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
-                {% endif %}
-                <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
-                {% endblock %}
+                <img src="{% static 'admin/images/basic-user.png' %}" class="ml-2 img-thumbnail rounded-circle user-thumbnail" alt="Basic User">
+                
+                  <ul class="user-tool-dropwdown">
+                    {% block userlinks %}
+
+                    {% if site_url %}
+                    <li><a href="{{ site_url }}">{% trans 'View site' %}</a></li>
+                    {% endif %}
+
+                    {% if user.is_active and user.is_staff %}
+                    <li><a href="{% url 'admin:auth_user_change' user.id %}">{% trans 'Profile' %}</a></li>
+                    {% url 'django-admindocs-docroot' as docsroot %}
+
+                    {% if docsroot %}
+                    <li><a href="{{ docsroot }}">{% trans 'Documentation' %}</a></li>
+                    {% endif %}
+                    {% endif %}
+                    
+                    {% if user.has_usable_password %}
+                    <li><a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a></li>
+                    {% endblock %}
+                  </ul>
+                
             </div>
             {% endif %}
             {% endblock %}
             {% block nav-global %}{% endblock %}
         </div>
+        {% endif %}
         <!-- END Header -->
+        {% if user.is_authenticated %}
         {% block breadcrumbs %}
-        <div class="breadcrumbs">
+        <div class="breadcrumbs ">
             <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
             {% if title %} &rsaquo; {{ title }}{% endif %}
         </div>
         {% endblock %}
+        {% endif %}
+
         {% endif %}
 
         {% block messages %}
@@ -89,17 +104,81 @@
         {% endblock messages %}
 
         <!-- Content -->
-        <div id="content" class="{% block coltype %}colM{% endblock %}">
-            {% block pretitle %}{% endblock %}
-            {% block content_title %}{% if title %}<h4 class="pl-3">{{ title }}</h4>{% endif %}{% endblock %}
-            {% block content %}
-            {% block object-tools %}{% endblock %}
-            {{ content }}
-            {% endblock %}
-            {% block sidebar %}{% endblock %}
-            <br class="clear">
-        </div>
+        
         <!-- END Content -->
+
+
+        <!-- New designed Content -->
+        <div class="container-fluid h-100" id="appBaseContainer">
+            <div class="row h-100">
+                {% if user.is_authenticated %}
+                <div class="col-md-2 col-lg-2 col-xl-2 app-sidebar position-fixed" id="sticky-sidebar">
+                    <div class="w-100 model-list-sidebar overflow-hidden">
+                        <!-- <ul class="list-group ">
+                            <li class="list-group-item sidebar-nav-li"><a href="{{ model.admin_url }}"><span class="mr-2"><i class="fas fa-tachometer-alt"></i></span> <b>Dashboard</b></a></li>
+                        </ul> -->
+                        
+                        <ul class="list-group list-group-flush pl-3 pr-3 pt-2 pb-2 mb-2">
+                            <li class="list-group-item sidebar-nav-li">
+                                <a href="{% url 'admin:index' %}"><span class="mr-2"><i class="fas fa-tachometer-alt"></i></span> <b>{% trans 'Dashboard' %}</b></a>
+                            </li>
+                            <li class="list-group-item sidebar-nav-li">
+                                <a href="#"><span class="mr-2"><i class="fas fa-image"></i></span> <span>Media</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
+                                <ul class="sidebar-list-submenu mt-3">
+                                    <li><a href="{% url 'admin:dookan_media_add' %}"><span class="mr-3"><i class="far fa-plus-square"></i></span> <span>Create</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_media_changelist' %}"><span class="mr-3"><i class="fas fa-th-list"></i></span> <span>List</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item sidebar-nav-li">
+                                <a href="#"><span class="mr-2"><i class="fas fa-box-open"></i></span> <span>Product</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
+                                <ul class="sidebar-list-submenu mt-3">
+                                    <li><a href="{% url 'admin:dookan_category_changelist' %}"><span class="mr-3"><i class="fas fa-th"></i></span> <span>Category</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_brand_changelist' %}"><span class="mr-3"><i class="fab fa-bandcamp"></i></span> <span>Brand</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_producttype_changelist' %}"><span class="mr-3"><i class="fas fa-grip-vertical"></i></span> <span>Product Type</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_product_changelist' %}"><span class="mr-3"><i class="fab fa-bandcamp"></i></span> <span>Product</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item sidebar-nav-li">
+                                <a href="#"><span class="mr-2"><i class="fas fa-luggage-cart"></i></span> <span>Order & Cart</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
+                                <ul class="sidebar-list-submenu mt-3">
+                                    <li><a href="{% url 'admin:dookan_cart_changelist' %}"><span class="mr-3"><i class="fas fa-shopping-cart"></i></span> <span>Cart</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_cartitem_changelist' %}"><span class="mr-3"><i class="fas fa-cart-plus"></i></span> <span>Cart Item</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_order_changelist' %}"><span class="mr-3"><i class="fab fa-first-order"></i></span> <span>Order</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item sidebar-nav-li">
+                                <a href="#"><span class="mr-2"><i class="fas fa-cogs"></i></span> <span>Settings</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
+                                <ul class="sidebar-list-submenu mt-3">
+                                    <li><a href="{% url 'admin:auth_user_changelist' %}"><span class="mr-3"><i class="fas fa-users"></i></span> <span>User</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_customer_changelist' %}"><span class="mr-3"><i class="fas fa-user-shield"></i></span> <span>Customer</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_system_changelist' %}"><span class="mr-3"><i class="fas fa-dharmachakra"></i></span> <span>System</span></a></li>
+                                    <li><a href="{% url 'admin:auth_group_changelist' %}"><span class="mr-3"><i class="fab fa-renren"></i></span> <span>User Role</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </div>
+                {% endif %}
+                <div class="{% if user.is_authenticated %}col-md-10 col-lg-10 col-xl-10 offset-2{% else %} col-md-12 col-lg-12 col-xl-12 h-100 login-container-fluid {% endif %}" id="main">
+                    <div class="w-100 overflow-hidden h-100">
+                        {% if user.is_authenticated %}
+                        <div class="w-100">
+                            {% block pretitle %}{% endblock %}
+                            {% block content_title %}{% if title %}<h4 class="pl-3 pt-3 pb-3">{{ title }}</h4>{% endif %}{% endblock %}
+                        </div>
+                        {% endif %}
+                        <div class="content-box w-100 h-100">
+                            {% block content %}
+                            {% block object-tools %}{% endblock %}
+                            {{ content }}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END New designed Content -->
 
         {% block footer %}<div id="footer"></div>{% endblock %}
     </div>
@@ -110,7 +189,11 @@
 
             $(document).ready(function () {
 
-                console.log("it is working");
+                // console.log("it is working");
+                // adding bootstrap form class to inputs
+                $(".form-group").children("input[type='text'], input[type='password']").addClass("form-control");
+
+
                 $(".table-view").click(function () {
                     $(".data-grid-view").addClass("hide-template");
                     $(".data-table-view").css({ "display": "block" })
@@ -120,6 +203,21 @@
                     $(".data-grid-view").removeClass("hide-template");
                     $(".data-table-view").css({ "display": "none" })
                 });
+
+                $(".user-thumbnail").click(function(){
+                    $(".user-tool-dropwdown").toggle(350);
+                });
+
+                $(".sidebar-nav-li").click(function(){
+                    $(this).children(".sidebar-list-submenu").toggle(350);
+                });
+
+                if ( $( "#app-breadcrumbs" ).hasClass( "position-fixed" ) ) {
+                    $( "#appBaseContainer" ).addClass("containerMargin");
+                }
+                else{
+                    $( "#appBaseContainer" ).removeClass("containerMargin");
+                }
 
             });
 
