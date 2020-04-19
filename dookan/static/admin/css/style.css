@@ -390,9 +390,9 @@ thead th a:link, thead th a:visited {
     background: #fff !important;
     /* border: 1px solid #1c2436 !important; */
     border: none !important;
-    min-width: 28rem !important;
-    width: 35rem !important;
-    max-width: 40rem !important;
+    min-width: 28em !important;
+    /* width: 35em !important; */
+    max-width: 40em !important;
     margin-top: 70px;
     
 }
@@ -417,7 +417,7 @@ input[type=submit], input[type=button] {
 }
 
 .errornote {
-    width: 34.5em !important;
+    width: 40em !important;
     font-size: 13px !important;
     font-weight: normal !important;
     display: block;
