@@ -383,18 +383,22 @@ thead th a:link, thead th a:visited {
     overflow: hidden !important;
     width: 100% !important;
     min-width: 300px !important;
-    margin: 100px auto !important;
+    margin: 0px auto !important;
 }
 
 .login #container #login-content-main{
     background: #fff !important;
     /* border: 1px solid #1c2436 !important; */
     border: none !important;
-    width: 28em !important;
+    min-width: 28rem !important;
+    width: 35rem !important;
+    max-width: 40rem !important;
+    margin-top: 70px;
+    
 }
 
 .login-header{
-    background-color: #25314b !important;
+    background-color: #e7530ea1 !important;
     color: #ffffff !important;
 }
 
@@ -404,10 +408,44 @@ thead th a:link, thead th a:visited {
 }
 
 input[type=submit], input[type=button] {
-    background: #25314b !important;
+    background: #46567c !important;
     border: 1px solid #25314b !important;
     padding: none !important;
     border-radius: 4px;
     color: #fff !important;
     cursor: pointer !important;
+}
+
+.errornote {
+    width: 34.5em !important;
+    font-size: 13px !important;
+    font-weight: normal !important;
+    display: block;
+    padding: none !important;
+    margin: 0 0 10px 0!important;
+    color: #ba2121;
+    border: none !important;
+    border-radius: 4px;
+    background-color: none !important;
+    background-position: none !important;
+}
+
+.login-left-bar{
+    background-color: #1a202e;
+    color: #ffffff;
+    padding-top: 50px;
+}
+
+.login-left-bar h3{
+    margin-top: 50px;
+  text-transform: uppercase;
+}
+
+.login-left-bar, .login-right-bar, .login-container-fluid{
+    padding-right: 0px !important ;
+    padding-left: 0px !important;
+}
+
+.login-right-bar{
+    padding-top: 50px !important;
 }

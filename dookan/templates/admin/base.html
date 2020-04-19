@@ -36,7 +36,7 @@
     data-admin-utc-offset="{% now "Z" %}">
 
     <!-- Container -->
-    <div id="container" class="position-relative">
+    <div id="container" class="position-relative h-100">
 
         {% if not is_popup %}
         <!-- Header -->
@@ -109,8 +109,8 @@
 
 
         <!-- New designed Content -->
-        <div class="container-fluid" id="appBaseContainer">
-            <div class="row">
+        <div class="container-fluid h-100" id="appBaseContainer">
+            <div class="row h-100">
                 {% if user.is_authenticated %}
                 <div class="col-md-2 col-lg-2 col-xl-2 app-sidebar position-fixed" id="sticky-sidebar">
                     <div class="w-100 model-list-sidebar overflow-hidden">
@@ -160,15 +160,15 @@
                     </div>
                 </div>
                 {% endif %}
-                <div class="{% if user.is_authenticated %}col-md-10 col-lg-10 col-xl-10 offset-2{% else %} col-md-12 col-lg-12 col-xl-12 {% endif %}" id="main">
-                    <div class="w-100 overflow-hidden">
+                <div class="{% if user.is_authenticated %}col-md-10 col-lg-10 col-xl-10 offset-2{% else %} col-md-12 col-lg-12 col-xl-12 h-100 login-container-fluid {% endif %}" id="main">
+                    <div class="w-100 overflow-hidden h-100">
                         {% if user.is_authenticated %}
                         <div class="w-100">
                             {% block pretitle %}{% endblock %}
                             {% block content_title %}{% if title %}<h4 class="pl-3 pt-3 pb-3">{{ title }}</h4>{% endif %}{% endblock %}
                         </div>
                         {% endif %}
-                        <div class="content-box w-100">
+                        <div class="content-box w-100 h-100">
                             {% block content %}
                             {% block object-tools %}{% endblock %}
                             {{ content }}
