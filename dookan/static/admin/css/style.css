@@ -161,6 +161,12 @@ a:link, a:visited {
     border-color: #25314b !important;
 }
 
+.btn-dookan{
+    color: #fff !important;
+    background-color: #25314b !important;
+    border-color: #25314b !important;
+}
+
 .btn-outline-dookan:hover{
     color: #ffffff !important;
     border-color: #25314b !important;
