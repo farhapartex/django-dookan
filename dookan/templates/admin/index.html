@@ -45,9 +45,9 @@
                 <div class="w-100 shadow p-3 mb-5 bg-white rounded summary-box">
                     <h3 class="text-center" style="color: #0099cc;"><span><i class="far fa-clock"></i></span></h3>
                     <h5 class="text-center">Order Pending</h5>
-                    <h5 class="text-center">180</h5>
+                    <h5 class="text-center">{{ pending_orders }}</h5>
                     <p class="pt-3  text-center">
-                        <a href="#"><span class="mr-3">See All Orders</span> <span><i class="fas fa-arrow-right"></i></span></a>
+                        <a href="{% url 'admin:dookan_order_changelist' %}?order_confirm__exact=0"><span class="mr-3">See All Orders</span> <span><i class="fas fa-arrow-right"></i></span></a>
                     </p>
                 </div>
             </div>
@@ -55,9 +55,9 @@
                 <div class="w-100 shadow p-3 mb-5 bg-white rounded summary-box">
                     <h3 class="text-center" style="color: #00cc7a;"><span><i class="fas fa-user-tie"></i></span></h3>
                     <h5 class="text-center">Total Customer</h5>
-                    <h5 class="text-center">57800</h5>
+                    <h5 class="text-center">{{ total_customers }}</h5>
                     <p class="pt-3  text-center">
-                        <a href="#"><span class="mr-3">See All Customers</span> <span><i class="fas fa-arrow-right"></i></span></a>
+                        <a href="{% url 'admin:system_customer_changelist' %}"><span class="mr-3">See All Customers</span> <span><i class="fas fa-arrow-right"></i></span></a>
                     </p>
                 </div>
             </div>
