@@ -25,9 +25,9 @@
                 <div class="w-100 shadow p-3 mb-5 bg-white rounded summary-box">
                     <h3 class="text-center" style="color: tomato;"><span><i class="fas fa-funnel-dollar"></i></span></h3>
                     <h5 class="text-center">Today's Sales</h5>
-                    <h5 class="text-center">300120</h5>
+                    <h5 class="text-center">{{ sell_info.0 }}</h5>
                     <p class="mt-3 pt-3 pb-3" style="font-size: 13px;">
-                        <span class="float-left">Last Day: <span><i class="fas fa-dollar-sign"></i></span> 12058</span> <span class="float-right">This week: <span><i class="fas fa-dollar-sign"></i></span> 45865200</span>
+                        <span class="float-left">Last Day: <span><i class="fas fa-dollar-sign"></i></span> {{ sell_info.1 }}</span> <span class="float-right">Last 7 days: <span><i class="fas fa-dollar-sign"></i></span> {{ sell_info.2 }}</span>
                     </p>
                 </div>
             </div>
@@ -35,9 +35,9 @@
                 <div class="w-100 shadow p-3 mb-5 bg-white rounded summary-box">
                     <h3 class="text-center" style="color: #862d59;"><span><i class="fas fa-cart-plus"></i></span></h3>
                     <h5 class="text-center">Ordered Today</h5>
-                    <h5 class="text-center">300</h5>
+                    <h5 class="text-center">{{ total_order_today }}</h5>
                     <p class="pt-3  text-center">
-                        <a href="#"><span class="mr-3">See All Orders</span> <span><i class="fas fa-arrow-right"></i></span></a>
+                        <a href="{% url 'admin:dookan_order_changelist' %}"><span class="mr-3">See All Orders</span> <span><i class="fas fa-arrow-right"></i></span></a>
                     </p>
                 </div>
             </div>
@@ -45,9 +45,9 @@
                 <div class="w-100 shadow p-3 mb-5 bg-white rounded summary-box">
                     <h3 class="text-center" style="color: #0099cc;"><span><i class="far fa-clock"></i></span></h3>
                     <h5 class="text-center">Order Pending</h5>
-                    <h5 class="text-center">180</h5>
+                    <h5 class="text-center">{{ pending_orders }}</h5>
                     <p class="pt-3  text-center">
-                        <a href="#"><span class="mr-3">See All Orders</span> <span><i class="fas fa-arrow-right"></i></span></a>
+                        <a href="{% url 'admin:dookan_order_changelist' %}?order_confirm__exact=0"><span class="mr-3">See All Orders</span> <span><i class="fas fa-arrow-right"></i></span></a>
                     </p>
                 </div>
             </div>
@@ -55,16 +55,16 @@
                 <div class="w-100 shadow p-3 mb-5 bg-white rounded summary-box">
                     <h3 class="text-center" style="color: #00cc7a;"><span><i class="fas fa-user-tie"></i></span></h3>
                     <h5 class="text-center">Total Customer</h5>
-                    <h5 class="text-center">57800</h5>
+                    <h5 class="text-center">{{ total_customers }}</h5>
                     <p class="pt-3  text-center">
-                        <a href="#"><span class="mr-3">See All Customers</span> <span><i class="fas fa-arrow-right"></i></span></a>
+                        <a href="{% url 'admin:system_customer_changelist' %}"><span class="mr-3">See All Customers</span> <span><i class="fas fa-arrow-right"></i></span></a>
                     </p>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12">
+            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12">
                 <div class="w-100 dash-half-box">
                     <h2>{% trans 'Recent Activities' %}</h2>
                     {% load log %}
@@ -101,43 +101,37 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12">
+            <div class="col-md-8 col-lg-8 col-xl-8 col-sm-12">
                 <div class="w-100 dash-half-box">
                     <h5>Recent Orders</h5>
+                    {% if recent_orders %}
                     <table class="table table-hover">
                         <thead>
                           <tr>
                             <th scope="col">Refernce</th>
-                            <th scope="col">Invoice</th>
+                            <th scope="col">Confirmation</th>
                             <th scope="col">Customer</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">Payment Status</th>
                             <th scope="col">Amount</th>
+                            <th scope="col">Details</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">112-k</th>
-                            <td>INV-245784</td>
-                            <td>Md Nazmul Hasan</td>
-                            <td><span class="text-primary">Pending</span></td>
-                            <td>2580</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">112-k</th>
-                            <td>INV-245784</td>
-                            <td>Md Nazmul Hasan</td>
-                            <td><span class="text-success">Paid</span></td>
-                            <td>2580</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">112-k</th>
-                            <td>INV-245784</td>
-                            <td>Md Nazmul Hasan</td>
-                            <td><span class="text-danger">Canceld</span></td>
-                            <td>2580</td>
-                          </tr>
+                            {% for order in recent_orders %}
+                            <tr>
+                                <th scope="row">{{ order.order_reference }}</th>
+                                <td>
+                                    {% if order.order_confirm %}<span class="text-success">Confirmed</span>{% else %} <span class="text-primary">Pending</span>{% endif %}
+                                </td>
+                                <td>{{ order.cart.customer.user.get_full_name }}</td>
+                                <td>{{ order.payment_status }}</td>
+                                <td>{{ order.cost }}</td>
+                                <td><a href="{% url 'admin:dookan_order_change' order.id %}">Show</a></td>
+                            </tr>
+                            {% endfor %}
                         </tbody>
-                      </table>
+                    </table>
+                    {% endif %}
                 </div>
             </div>
         </div>

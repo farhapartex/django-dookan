@@ -138,7 +138,7 @@ class Cart(Base):
     products = models.ManyToManyField(Product,through='CartItem',through_fields=('cart', 'product'), verbose_name=_("Items"))
 
     def __str__(self):
-        return self.customer.user.username
+        return self.customer.user.username + str(self.id)
     
 
 class CartItem(Base):
@@ -179,4 +179,7 @@ class Order(Base):
 
     def __str__(self):
         return self.cart.customer.user.username
+    
+    class Meta:
+         ordering = ['created_at']
 
