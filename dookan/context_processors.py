@@ -1,6 +1,8 @@
-import datetime
+from django.db.models import Sum
 from dookan.models import *
 from system.models import *
+import datetime
+
 
 def get_order_info():
     try:
@@ -26,6 +28,23 @@ def get_total_order_today():
         return total_orders
     except:
         return 0
+    
+def get_sell_information():
+    today = datetime.date.today()
+    yesterday = today - datetime.timedelta(days=1)
+    last_week = today - datetime.timedelta(days=7)
+    try:
+        order_queryset = Order.objects.all()
+        today_sell = order_queryset.filter(created_at__date=today).aggregate(Sum('cost'))['cost__sum']
+        yesterday_sell = order_queryset.filter(created_at__date=yesterday).aggregate(Sum('cost'))['cost__sum']
+        last7days_sell = order_queryset.filter(created_at__date__gte=last_week, created_at__date__lte=today).aggregate(Sum('cost'))['cost__sum']
+        
+        yesterday_sell = 0 if yesterday_sell is None else yesterday_sell
+        last7days_sell = 0 if last7days_sell is None else last7days_sell
+        return (today_sell, yesterday_sell,last7days_sell)
+    except:
+        return (0.0, 0.0, 0.0)
+    
 
 def get_recent_orders():
     try:
@@ -41,6 +60,7 @@ def summary_data(request):
         "pending_orders": get_order_info(),
         "total_customers": get_customer_info(),
         "total_order_today": get_total_order_today(),
+        "sell_info": get_sell_information(),
         "recent_orders": get_recent_orders(),
     }
     

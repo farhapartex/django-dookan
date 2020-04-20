@@ -25,9 +25,9 @@
                 <div class="w-100 shadow p-3 mb-5 bg-white rounded summary-box">
                     <h3 class="text-center" style="color: tomato;"><span><i class="fas fa-funnel-dollar"></i></span></h3>
                     <h5 class="text-center">Today's Sales</h5>
-                    <h5 class="text-center">300120</h5>
+                    <h5 class="text-center">{{ sell_info.0 }}</h5>
                     <p class="mt-3 pt-3 pb-3" style="font-size: 13px;">
-                        <span class="float-left">Last Day: <span><i class="fas fa-dollar-sign"></i></span> 12058</span> <span class="float-right">This week: <span><i class="fas fa-dollar-sign"></i></span> 45865200</span>
+                        <span class="float-left">Last Day: <span><i class="fas fa-dollar-sign"></i></span> {{ sell_info.1 }}</span> <span class="float-right">Last 7 days: <span><i class="fas fa-dollar-sign"></i></span> {{ sell_info.2 }}</span>
                     </p>
                 </div>
             </div>
