@@ -159,6 +159,14 @@ class Order(Base):
     payment_status = models.CharField(_("Payment Status"), choices=PAYMENT_STATUS_CHOICES, max_length=20)
     order_received = models.BooleanField(_("Is Order Received?"), default=False)
     order_reference = models.CharField(_("Order Reference"), max_length=40, blank=True, null=True)
+    discount = models.DecimalField(_("Discount"), max_digits=12, decimal_places=2, blank=True, null=True)
+    order_note = models.TextField(_("Order Note"),  blank=True, null=True)
+    
+    def clean(self):
+        if self.discount > self.cost:
+            raise ValidationError(_("Discount amount can't be greater than total cost"), code='invalid')
+        if self.diccount and (self.order_note == "" or self.order_note is None):
+            raise ValidationError(_("You have to put a order note for a discount"), code='invalid')
 
     def save(self, *args, **kwargs):
         if self.order_reference is None or self.order_reference == "":
@@ -173,6 +181,10 @@ class Order(Base):
                     price = item.product.default_price * item.quantity
                 
                 self.cost += price
+        
+        if self.discount:
+            self.cost = self.cost-self.discount
+            
 
         super().save(*args, **kwargs)
     

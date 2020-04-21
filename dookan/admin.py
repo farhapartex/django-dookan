@@ -217,7 +217,23 @@ class CartItemAdmin(admin.ModelAdmin):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ("id", "cart", "cost", "order_confirm", "payment_status", "order_reference", "created_by", "created_at", "action")
-    fields = (('cart', 'payment_method', 'payment_status'), ('cost', ), 'order_reference', ('order_confirm', 'order_received'))
+    fieldsets = (
+        ("Required Information", {
+            "description": "These fields are required for each Product",
+            "fields": (
+                ('cart', 'payment_method', 'payment_status'),
+                ('cost', 'order_reference'),
+                ('order_confirm', 'order_received'),
+            ),
+        }),
+        ("Discount Information", {
+            'classes': ('collapse',),
+            'fields': (
+                ('discount',),
+                ('order_note')
+            )
+        })
+    )
     list_filter = ('order_confirm', 'payment_status', )
     search_fields = ['cart__customer__user__username', 'order_reference' ]
     readonly_fields=('cost', 'order_reference')
