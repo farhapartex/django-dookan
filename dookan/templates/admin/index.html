@@ -123,7 +123,7 @@
                                 <td>
                                     {% if order.order_confirm %}<span class="text-success">Confirmed</span>{% else %} <span class="text-primary">Pending</span>{% endif %}
                                 </td>
-                                <td>{{ order.cart.customer.user.get_full_name }}</td>
+                                <td>{% if order.cart.customer.user.get_full_name %} {{ order.cart.customer.user.get_full_name }} {% else %} {{ order.cart.customer.user.username }} {% endif %}</td>
                                 <td>{{ order.payment_status }}</td>
                                 <td>{{ order.cost }}</td>
                                 <td><a href="{% url 'admin:dookan_order_change' order.id %}">Show</a></td>

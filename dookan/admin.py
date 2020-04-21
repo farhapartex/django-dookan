@@ -40,11 +40,20 @@ class ProductAdminForm(forms.ModelForm):
             'description': HtmlEditor(attrs={'style': 'width: 90%; height: 100%;'}),
         }
 
+class OrderAdminForm(forms.ModelForm):
+    model = Order
+    class Meta:
+        fields = '__all__'
+        widgets = {
+            'order_note': HtmlEditor(attrs={'style': 'width: 90%; height: 100%;'}),
+        }
+
 
 @admin.register(Media)
 class MediaAdmin(admin.ModelAdmin):
     list_display = ("title", "image","md_image","sm_image", "created_by", "list_image_tag", "action")
     list_display_links = ('action',)
+    list_filter = ('created_at', )
     search_fields = ['title',]
     fieldsets = (
         ("Required Information", {
@@ -216,8 +225,25 @@ class CartItemAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
+    form = OrderAdminForm
     list_display = ("id", "cart", "cost", "order_confirm", "payment_status", "order_reference", "created_by", "created_at", "action")
-    fields = (('cart', 'payment_method', 'payment_status'), ('cost', ), 'order_reference', ('order_confirm', 'order_received'))
+    fieldsets = (
+        ("Required Information", {
+            "description": "These fields are required for each Product",
+            "fields": (
+                ('cart', 'payment_method', 'payment_status'),
+                ('cost', 'order_reference'),
+                ('order_confirm', 'order_received'),
+            ),
+        }),
+        ("Discount Information", {
+            'classes': ('collapse',),
+            'fields': (
+                ('discount',),
+                ('order_note')
+            )
+        })
+    )
     list_filter = ('order_confirm', 'payment_status', )
     search_fields = ['cart__customer__user__username', 'order_reference' ]
     readonly_fields=('cost', 'order_reference')

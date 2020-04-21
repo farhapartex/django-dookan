@@ -47,7 +47,7 @@ class System(Base):
 
     def __str__(self):
         return self.name
-    
+
 
 class Customer(Base):
     """docstring for Customer."""

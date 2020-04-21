@@ -39,6 +39,7 @@ def get_sell_information():
         yesterday_sell = order_queryset.filter(created_at__date=yesterday).aggregate(Sum('cost'))['cost__sum']
         last7days_sell = order_queryset.filter(created_at__date__gte=last_week, created_at__date__lte=today).aggregate(Sum('cost'))['cost__sum']
         
+        today_sell = 0 if today_sell is None else today_sell
         yesterday_sell = 0 if yesterday_sell is None else yesterday_sell
         last7days_sell = 0 if last7days_sell is None else last7days_sell
         return (today_sell, yesterday_sell,last7days_sell)

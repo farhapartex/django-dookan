@@ -40,7 +40,7 @@
 {% block coltype %}flex{% endblock %}
 
 {% block content %}
-<div id="content-main">
+<div id="content-main" class="">
     {% block object-tools %}
     <ul class="object-tools">
         {% block object-tools-items %}
@@ -54,7 +54,7 @@
     </p>
     {{ cl.formset.non_form_errors }}
     {% endif %}
-    <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
+    <div class="module{% if cl.has_filters %} filtered{% endif %} p-3" id="changelist">
         {% block search %}{% search_form cl %}{% endblock %}
         {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
 
