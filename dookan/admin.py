@@ -40,6 +40,14 @@ class ProductAdminForm(forms.ModelForm):
             'description': HtmlEditor(attrs={'style': 'width: 90%; height: 100%;'}),
         }
 
+class OrderAdminForm(forms.ModelForm):
+    model = Order
+    class Meta:
+        fields = '__all__'
+        widgets = {
+            'order_note': HtmlEditor(attrs={'style': 'width: 90%; height: 100%;'}),
+        }
+
 
 @admin.register(Media)
 class MediaAdmin(admin.ModelAdmin):
@@ -216,6 +224,7 @@ class CartItemAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
+    form = OrderAdminForm
     list_display = ("id", "cart", "cost", "order_confirm", "payment_status", "order_reference", "created_by", "created_at", "action")
     fieldsets = (
         ("Required Information", {
