@@ -480,3 +480,12 @@ input[type=submit], input[type=button] {
 #changelist-filter ul li, #changelist-filter ul li a{
     color: #3a4661  !important;
 }
+
+.dookan-actions{
+    margin-right: 280px;
+}
+
+.action-counter{
+    font-size: 13px;
+    color: rgb(119, 113, 113);
+}

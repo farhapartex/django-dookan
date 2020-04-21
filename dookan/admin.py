@@ -53,6 +53,7 @@ class OrderAdminForm(forms.ModelForm):
 class MediaAdmin(admin.ModelAdmin):
     list_display = ("title", "image","md_image","sm_image", "created_by", "list_image_tag", "action")
     list_display_links = ('action',)
+    list_filter = ('created_at', )
     search_fields = ['title',]
     fieldsets = (
         ("Required Information", {
