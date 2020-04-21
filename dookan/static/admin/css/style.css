@@ -455,3 +455,28 @@ input[type=submit], input[type=button] {
 .login-right-bar{
     padding-top: 50px !important;
 }
+
+/* Change List CSS */
+
+.change-list #content-main{
+    background-color: #fff !important;
+    /* margin-top: 20px !important; */
+}
+
+#changelist-filter {
+    z-index: 997 !important;
+    background: #dbdada !important;
+}
+
+#changelist-filter h2{
+    background-color: #1a202e !important;
+    padding: 14px 10px !important;
+}
+
+#changelist-filter li.selected a {
+    color: #4a5d8b !important;
+}
+
+#changelist-filter ul li, #changelist-filter ul li a{
+    color: #3a4661  !important;
+}
