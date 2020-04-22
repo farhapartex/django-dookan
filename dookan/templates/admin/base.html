@@ -97,7 +97,7 @@
 
         {% block messages %}
         {% if messages %}
-        <ul class="messagelist">{% for message in messages %}
+        <ul class="messagelist" id="appMessageList" style="margin-top: 41px;">{% for message in messages %}
             <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message|capfirst }}</li>
                 {% endfor %}</ul>
         {% endif %}
@@ -218,6 +218,15 @@
                 }
                 else{
                     $( "#appBaseContainer" ).removeClass("containerMargin");
+                }
+
+                if ( $( "#appMessageList" ).hasClass( "messagelist" ) ) { 
+                    $( "#appBaseContainer" ).removeClass("containerMargin");
+                    $( "#appBaseContainer" ).addClass("containerMarginDec");
+                }
+                else{
+                    $( "#appBaseContainer" ).addClass("containerMargin");
+                    $( "#appBaseContainer" ).removeClass("containerMarginDec");
                 }
 
             });
