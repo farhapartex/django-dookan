@@ -123,14 +123,24 @@
                                 <a href="{% url 'admin:index' %}"><span class="mr-2"><i class="fas fa-tachometer-alt"></i></span> <b>{% trans 'Dashboard' %}</b></a>
                             </li>
                             <li class="list-group-item sidebar-nav-li">
-                                <a href="#"><span class="mr-2"><i class="fas fa-image"></i></span> <span>Media</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
+                                <a href="#">
+                                    <span class="mr-2"><i class="fas fa-image"></i></span>
+                                    <span>Media</span> 
+                                    <span class="float-right arrow-right"><i class="fas fa-angle-right"></i></span>
+                                    <span class="float-right arrow-down hide"><i class="fas fa-angle-down"></i></span>
+                                </a>
                                 <ul class="sidebar-list-submenu mt-3">
                                     <li><a href="{% url 'admin:dookan_media_add' %}"><span class="mr-3"><i class="far fa-plus-square"></i></span> <span>Create</span></a></li>
                                     <li><a href="{% url 'admin:dookan_media_changelist' %}"><span class="mr-3"><i class="fas fa-th-list"></i></span> <span>List</span></a></li>
                                 </ul>
                             </li>
                             <li class="list-group-item sidebar-nav-li">
-                                <a href="#"><span class="mr-2"><i class="fas fa-box-open"></i></span> <span>Product</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
+                                <a href="#">
+                                    <span class="mr-2"><i class="fas fa-box-open"></i></span>
+                                    <span>Product</span>
+                                    <span class="float-right arrow-right"><i class="fas fa-angle-right"></i></span>
+                                    <span class="float-right arrow-down hide"><i class="fas fa-angle-down"></i></span>
+                                </a>
                                 <ul class="sidebar-list-submenu mt-3">
                                     <li><a href="{% url 'admin:dookan_category_changelist' %}"><span class="mr-3"><i class="fas fa-th"></i></span> <span>Category</span></a></li>
                                     <li><a href="{% url 'admin:dookan_brand_changelist' %}"><span class="mr-3"><i class="fab fa-bandcamp"></i></span> <span>Brand</span></a></li>
@@ -139,7 +149,12 @@
                                 </ul>
                             </li>
                             <li class="list-group-item sidebar-nav-li">
-                                <a href="#"><span class="mr-2"><i class="fas fa-luggage-cart"></i></span> <span>Order & Cart</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
+                                <a href="#">
+                                    <span class="mr-2"><i class="fas fa-luggage-cart"></i></span>
+                                    <span>Order & Cart</span>
+                                    <span class="float-right arrow-right"><i class="fas fa-angle-right"></i></span>
+                                    <span class="float-right arrow-down hide"><i class="fas fa-angle-down"></i></span>
+                                </a>
                                 <ul class="sidebar-list-submenu mt-3">
                                     <li><a href="{% url 'admin:dookan_cart_changelist' %}"><span class="mr-3"><i class="fas fa-shopping-cart"></i></span> <span>Cart</span></a></li>
                                     <li><a href="{% url 'admin:dookan_cartitem_changelist' %}"><span class="mr-3"><i class="fas fa-cart-plus"></i></span> <span>Cart Item</span></a></li>
@@ -147,7 +162,12 @@
                                 </ul>
                             </li>
                             <li class="list-group-item sidebar-nav-li">
-                                <a href="#"><span class="mr-2"><i class="fas fa-cogs"></i></span> <span>Settings</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
+                                <a href="#">
+                                    <span class="mr-2"><i class="fas fa-cogs"></i></span>
+                                    <span>Settings</span>
+                                    <span class="float-right arrow-right"><i class="fas fa-angle-right"></i></span>
+                                    <span class="float-right arrow-down hide"><i class="fas fa-angle-down"></i></span>
+                                </a>
                                 <ul class="sidebar-list-submenu mt-3">
                                     <li><a href="{% url 'admin:auth_user_changelist' %}"><span class="mr-3"><i class="fas fa-users"></i></span> <span>User</span></a></li>
                                     <li><a href="{% url 'admin:system_customer_changelist' %}"><span class="mr-3"><i class="fas fa-user-shield"></i></span> <span>Customer</span></a></li>
@@ -207,27 +227,46 @@
 
                 $(".user-thumbnail").click(function(){
                     $(".user-tool-dropwdown").toggle(350);
+                    
                 });
 
                 $(".sidebar-nav-li").click(function(){
                     $(this).children(".sidebar-list-submenu").toggle(350);
+                    if ( $(this).children("a").children(".arrow-down").hasClass( "hide" ) ) { 
+                        $(this).children("a").children(".arrow-down").removeClass("hide");
+                        $(this).children("a").children(".arrow-right").addClass("hide");
+                    }
+                    else if ( $(this).children("a").children(".arrow-right").hasClass( "hide" ) ) { 
+                        $(this).children("a").children(".arrow-right").removeClass("hide");
+                        $(this).children("a").children(".arrow-down").addClass("hide");
+                    }
                 });
 
                 if ( $( "#app-breadcrumbs" ).hasClass( "position-fixed" ) ) {
-                    $( "#appBaseContainer" ).addClass("containerMargin");
+                    // $( "#appBaseContainer" ).addClass("containerMargin");
+
+                    if ( $( "#appMessageList" ).hasClass( "messagelist" ) ) { 
+                        $( "#appBaseContainer" ).removeClass("containerMargin");
+                        $( "#appBaseContainer" ).addClass("containerMarginDec");
+                    }
+                    else{
+                        $( "#appBaseContainer" ).addClass("containerMargin");
+                        $( "#appBaseContainer" ).removeClass("containerMarginDec");
+                    }
                 }
                 else{
-                    $( "#appBaseContainer" ).removeClass("containerMargin");
+                    // $( "#appBaseContainer" ).removeClass("containerMargin");
+                    if ( $( "#appMessageList" ).hasClass( "messagelist" ) ) { 
+                        $( "#appBaseContainer" ).removeClass("containerMargin");
+                        $( "#appBaseContainer" ).addClass("containerMarginDec");
+                    }
+                    else{
+                        $( "#appBaseContainer" ).removeClass("containerMargin");
+                        $( "#appBaseContainer" ).addClass("containerMarginDec");
+                    }
                 }
 
-                if ( $( "#appMessageList" ).hasClass( "messagelist" ) ) { 
-                    $( "#appBaseContainer" ).removeClass("containerMargin");
-                    $( "#appBaseContainer" ).addClass("containerMarginDec");
-                }
-                else{
-                    $( "#appBaseContainer" ).addClass("containerMargin");
-                    $( "#appBaseContainer" ).removeClass("containerMarginDec");
-                }
+                
 
             });
 

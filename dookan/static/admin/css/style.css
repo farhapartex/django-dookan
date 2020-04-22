@@ -272,6 +272,14 @@ thead th a:link, thead th a:visited {
     background-color: #1c2436 !important;
 }
 
+.show{
+    display: block;
+}
+
+.hide{
+    display: none;
+}
+
 .col-md-2, .col-lg-2, .col-xl-2{
     padding-right: 0px !important;
     padding-left: 0px !important;
@@ -309,12 +317,22 @@ thead th a:link, thead th a:visited {
 .sidebar-list-submenu{
     list-style: none !important;
     display: none;
+    background-color: rgb(16, 17, 31);
+    list-style: none;
+    padding: 0px !important;
 }
 
 .sidebar-list-submenu > li{
-    padding-top: 5px;
-    padding-bottom: 5px;
+    /* padding-top: 8px;
+    padding-bottom: 8px; */
     font-size: 15px !important;
+    padding: 10px 12px !important;
+    border-right: 5px solid rgb(16, 17, 31);
+}
+
+.sidebar-list-submenu > li:hover{
+    background-color: rgb(25, 27, 48);
+    border-right: 5px solid #e7530ea1;
 }
 
 .summary-box > p > a{
