@@ -95,13 +95,7 @@
 
         {% endif %}
 
-        {% block messages %}
-        {% if messages %}
-        <ul class="messagelist" id="appMessageList" style="margin-top: 41px;">{% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message|capfirst }}</li>
-                {% endfor %}</ul>
-        {% endif %}
-        {% endblock messages %}
+        
 
         <!-- Content -->
         
@@ -163,6 +157,17 @@
                             </li>
                             <li class="list-group-item sidebar-nav-li">
                                 <a href="#">
+                                    <span class="mr-2"><i class="fas fa-vector-square"></i></span>
+                                    <span>Services</span> 
+                                    <span class="float-right arrow-right"><i class="fas fa-angle-right"></i></span>
+                                    <span class="float-right arrow-down hide"><i class="fas fa-angle-down"></i></span>
+                                </a>
+                                <ul class="sidebar-list-submenu mt-3">
+                                    <li><a href="{% url 'admin:dookan_coupon_changelist' %}"><span class="mr-3"><i class="fas fa-compress"></i></span> <span>Coupon</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item sidebar-nav-li">
+                                <a href="#">
                                     <span class="mr-2"><i class="fas fa-cogs"></i></span>
                                     <span>Settings</span>
                                     <span class="float-right arrow-right"><i class="fas fa-angle-right"></i></span>
@@ -181,6 +186,15 @@
                 </div>
                 {% endif %}
                 <div class="{% if user.is_authenticated %}col-md-10 col-lg-10 col-xl-10 offset-2{% else %} col-md-12 col-lg-12 col-xl-12 h-100 login-container-fluid {% endif %}" id="main">
+                    
+                    {% block messages %}
+                    {% if messages %}
+                    <ul class="messagelist" id="appMessageList">{% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message|capfirst }}</li>
+                            {% endfor %}</ul>
+                    {% endif %}
+                    {% endblock messages %}
+                    
                     <div class="w-100 overflow-hidden h-100">
                         {% if user.is_authenticated %}
                         <div class="w-100">
@@ -243,27 +257,10 @@
                 });
 
                 if ( $( "#app-breadcrumbs" ).hasClass( "position-fixed" ) ) {
-                    // $( "#appBaseContainer" ).addClass("containerMargin");
-
-                    if ( $( "#appMessageList" ).hasClass( "messagelist" ) ) { 
-                        $( "#appBaseContainer" ).removeClass("containerMargin");
-                        $( "#appBaseContainer" ).addClass("containerMarginDec");
-                    }
-                    else{
-                        $( "#appBaseContainer" ).addClass("containerMargin");
-                        $( "#appBaseContainer" ).removeClass("containerMarginDec");
-                    }
+                    $( "#appBaseContainer" ).addClass("containerMargin");
                 }
                 else{
-                    // $( "#appBaseContainer" ).removeClass("containerMargin");
-                    if ( $( "#appMessageList" ).hasClass( "messagelist" ) ) { 
-                        $( "#appBaseContainer" ).removeClass("containerMargin");
-                        $( "#appBaseContainer" ).addClass("containerMarginDec");
-                    }
-                    else{
-                        $( "#appBaseContainer" ).removeClass("containerMargin");
-                        $( "#appBaseContainer" ).addClass("containerMarginDec");
-                    }
+                    $( "#appBaseContainer" ).removeClass("containerMargin");
                 }
 
                 

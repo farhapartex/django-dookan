@@ -239,7 +239,7 @@ class OrderAdmin(admin.ModelAdmin):
         ("Discount Information", {
             'classes': ('collapse',),
             'fields': (
-                ('discount',),
+                ('discount', 'coupon'),
                 ('order_note')
             )
         })
@@ -257,10 +257,11 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):
-    fields = (('category', 'code'), ('amount', 'amount_type'), ('valid_from',), 'valid_until', 'active',)
+    fields = (('code','amount', 'amount_type'), ('valid_from',), 'valid_until',('category', 'is_brand', 'brand'),  'active',)
     list_display_links = ('action',)
     list_display = ("category", "code", "amount", "amount_type", "valid_from", "valid_until", "active", "action")
-    list_filter = ("category", "code", "valid_from", "valid_until")
+    list_filter = ("valid_from", "valid_until")
+    search_fields = ['code',]
     list_per_page=10
 
     def action(self, obj):

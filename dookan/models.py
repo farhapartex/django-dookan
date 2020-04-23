@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.shortcuts import get_object_or_404
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -121,13 +122,15 @@ class Product(Base):
 
 AMOUNT_TYPE_CHOICES = (('percentage', 'Percentage'), ('fixed', 'Fixed'))
 class Coupon(Base):
-    category = models.ForeignKey(Category, related_name="coupons", on_delete=models.CASCADE)
     code = models.CharField(_("Coupon Code"), max_length=15)
     amount = models.IntegerField()
     amount_type = models.CharField(_("Amount Type"), choices=AMOUNT_TYPE_CHOICES, default='percentage', max_length=15)
     valid_from = models.DateField()
     valid_until = models.DateField()
     active = models.BooleanField(default=True)
+    category = models.ForeignKey(Category, related_name="cat_coupons", on_delete=models.SET_NULL, blank=True, null=True)
+    is_brand = models.BooleanField(_("Is For Brand?"), default=False, blank=True, null=True)
+    brand = models.ForeignKey(Brand, related_name="brand_coupons", on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.code
@@ -160,6 +163,7 @@ class Order(Base):
     order_received = models.BooleanField(_("Is Order Received?"), default=False)
     order_reference = models.CharField(_("Order Reference"), max_length=40, blank=True, null=True)
     discount = models.DecimalField(_("Discount"), max_digits=12, decimal_places=2, blank=True, null=True)
+    coupon = models.CharField(_("Coupon"), max_length=15, blank=True, null=True)
     order_note = models.TextField(_("Order Note"),  blank=True, null=True)
     
     def clean(self):
@@ -183,7 +187,18 @@ class Order(Base):
                 self.cost += price
         
         if self.discount:
-            self.cost = self.cost-self.discount
+            self.cost -= self.discount
+        
+        if self.coupon:
+            queryset = Coupon.objects.all()
+            coupon = get_object_or_404(queryset, code=self.coupon)
+            
+            today = datetime.date.today()
+            if coupon.valid_from <= today and coupon.valid_until >= today:
+                if coupon.amount_type == "percentage":
+                    self.cost -= (self.cost * coupon.amount)/100
+                elif coupon.amount_type == "fixed":
+                    self.cost -= coupon.amount
             
 
         super().save(*args, **kwargs)
