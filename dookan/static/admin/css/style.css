@@ -521,3 +521,32 @@ body.change-form fieldset{
     background: #25314b !important;
     color: #fff;
 }
+
+/* Delete confirmation CSS */
+.delete_confirmation_box{
+    padding: 15px;
+    background-color: #fff;
+}
+
+.delete-summary-list{
+    list-style-type: none !important;
+    padding: 4px !important;
+}
+.delete-summary-list li, .delete-objects-list li{
+    list-style: none !important;
+    /* padding: 0px !important; */
+}
+
+.btn-danger {
+    color: #fff !important;
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
+.delete-confirmation form input[type="submit"] {
+    background: #dc3545 !important;
+    border-color: #dc3545 !important;
+    border-radius: 4px;
+    padding: .37rem .75rem !important;
+    color: #fff !important;
+}

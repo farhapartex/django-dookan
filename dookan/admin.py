@@ -237,6 +237,7 @@ class OrderAdmin(admin.ModelAdmin):
             ),
         }),
         ("Discount Information", {
+            "description": "Admin can discount for any order. Admin can use discount field or coupon field for discount",
             'classes': ('collapse',),
             'fields': (
                 ('discount', 'coupon'),
@@ -257,7 +258,22 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):
-    fields = (('code','amount', 'amount_type'), ('valid_from',), 'valid_until',('category', 'is_brand', 'brand'),  'active',)
+    fieldsets = (
+        ("General Information", {
+            "description": "General information for each Coupon",
+            "fields": (
+                ('code','amount', 'amount_type'),
+                'valid_from', 'valid_until',
+            ),
+        }),
+        ("Coupon Dependency", {
+            "description": "You can create coupon for a category or for a brand.",
+            'fields': (
+                ('category', 'is_brand', 'brand'),
+                'active',
+            )
+        })
+    )
     list_display_links = ('action',)
     list_display = ("category", "code", "amount", "amount_type", "valid_from", "valid_until", "active", "action")
     list_filter = ("valid_from", "valid_until")

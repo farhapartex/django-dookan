@@ -169,7 +169,7 @@ class Order(Base):
     def clean(self):
         if self.discount > self.cost:
             raise ValidationError(_("Discount amount can't be greater than total cost"), code='invalid')
-        if self.diccount and (self.order_note == "" or self.order_note is None):
+        if (self.diccount or self.coupne) and (self.order_note == "" or self.order_note is None):
             raise ValidationError(_("You have to put a order note for a discount"), code='invalid')
 
     def save(self, *args, **kwargs):
