@@ -9,41 +9,12 @@ from django.utils.text import slugify
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import logging, sys, uuid
-from system.models import Base, Customer
-from system.utils import *
-from .files import *
-from .media import DynamicImageResize
+from system.models import Base, User, Customer, Media
+# from system.utils import *
 
 
 # Create your models here.
 logger = logging.getLogger(__name__)
-USER_MODEL = get_user_model()
-
-class Media(Base):
-    title = models.CharField(_("Image Title"), max_length=50, blank=True, null=True)
-    image = models.ImageField(_("Image"), storage=fs,upload_to=image_upload_path)
-    md_image = models.ImageField(_("Medium Image"), storage=fs,upload_to=md_image_upload_path, blank=True, null=True)
-    sm_image = models.ImageField(_("Small Image"), storage=fs,upload_to=sm_image_upload_path, blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        try:
-            # get image size from settings.py file
-            md_size = settings.MID_IMAGE_SIZE
-            sm_size = settings.SM_IMAGE_SIZE
-        except :
-            # if no size get from settings.py, default size will be this
-            md_size = (768,1024)
-            sm_size = (265, 300)
-
-        if not self.md_image:
-            self.md_image = DynamicImageResize(md_size, self.image).get_resize_image()
-        if not self.sm_image:
-            self.sm_image = DynamicImageResize(sm_size, self.image).get_resize_image()
-
-        super(Media, self).save(*args, **kwargs)
-    
-    def __str__(self):
-        return self.title
 
 
 class PaymentMethod(Base):

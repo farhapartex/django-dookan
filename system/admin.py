@@ -5,6 +5,49 @@ from .models import *
 
 # Register your models here.
 
+@admin.register(Media)
+class MediaAdmin(admin.ModelAdmin):
+    list_display = ("title", "image","md_image","sm_image", "created_by", "list_image_tag", "action")
+    list_display_links = ('action',)
+    list_filter = ('created_at', )
+    search_fields = ['title',]
+    fieldsets = (
+        ("Required Information", {
+            "description": "These fields are required for each Media",
+            "fields": (
+                ('title',),
+                ('image', 'image_tag'),
+            ),
+        }),
+        ("Optional Information", {
+            'classes': ('collapse',),
+            'fields': (
+                ('md_image','sm_image'),
+            )
+        })
+    )
+    readonly_fields = ('image_tag',)
+    list_per_page=10
+    
+
+    def image_tag(self, obj):
+        return format_html('<img src="{}" width="160" height="135"/>'.format(obj.image.url))
+    
+    def list_image_tag(self, obj):
+        return format_html('<img src="{}" width="75" height="50"/>'.format(obj.sm_image.url))
+    
+    def action(self, obj):
+        return format_html('{}'.format('Edit'))
+
+    image_tag.short_description = 'Image'
+    list_image_tag.short_description = 'Image Preview'
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    pass
+
+    
 class CustomerAdminForm(forms.ModelForm):
     model = Customer
     class Meta:
