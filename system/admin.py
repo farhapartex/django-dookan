@@ -45,7 +45,22 @@ class MediaAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("id", "full_name", "username", "email", "is_staff", "is_active", "action")
+    search_fields = ['first_name', 'last_name', 'username', 'email']
+    list_display_links = ('action',)
+    list_filter = ('is_staff','created_at', )
+    list_per_page=10
+    actions = ['inactive_user']
+    
+    def action(self, obj):
+        return format_html('{}'.format('Edit'))
+
+    def full_name(self, obj):
+        return obj.get_full_name()
+    
+    def inactive_user(self, request, queryset):
+        queryset.update(is_active=False)
+    inactive_user.short_description = "Inactive selected users"
 
     
 class CustomerAdminForm(forms.ModelForm):
