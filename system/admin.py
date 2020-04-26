@@ -45,6 +45,29 @@ class MediaAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ("General Information", {
+            "description": "User General Information",
+            "fields": (
+                ('first_name', 'last_name', 'username'),
+                ('email','avatar'),
+                ('is_staff', 'is_active', 'is_superuser')
+                
+            ),
+        }),
+        ("User Role & Permission", {
+            'fields': (
+                ('groups',),'user_permissions'
+            )
+        }),
+        ("Login & Creation Timing", {
+            'classes': ('collapse',),
+            'fields': (
+                ('last_login','date_joined'),
+            )
+        })
+    )
+    readonly_fields=('last_login','date_joined')
     list_display = ("id", "full_name", "username", "email", "is_staff", "is_active", "action")
     search_fields = ['first_name', 'last_name', 'username', 'email']
     list_display_links = ('action',)
