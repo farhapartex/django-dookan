@@ -73,7 +73,10 @@ class Media(Base):
         super(Media, self).save(*args, **kwargs)
     
     def __str__(self):
-        return self.title
+        try:
+            return self.title
+        except:
+            return "Media "+ str(self.id)
 
 
 class User(AbstractUser, Base):

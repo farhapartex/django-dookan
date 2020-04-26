@@ -550,3 +550,7 @@ body.change-form fieldset{
     padding: .37rem .75rem !important;
     color: #fff !important;
 }
+
+.form-row > .field-user_avatar, .form-row > .field-is_staff{
+    margin-left: 60px !important;
+}

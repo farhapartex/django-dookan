@@ -50,10 +50,15 @@ class UserAdmin(admin.ModelAdmin):
             "description": "User General Information",
             "fields": (
                 ('first_name', 'last_name', 'username'),
-                ('email','avatar'),
-                ('is_staff', 'is_active', 'is_superuser')
+                ('email','is_staff',),
+                ( 'is_active', 'is_superuser')
                 
             ),
+        }),
+        ("User Avatar", {
+            'fields': (
+                ('avatar', 'user_avatar'),
+            )
         }),
         ("User Role & Permission", {
             'fields': (
@@ -67,7 +72,7 @@ class UserAdmin(admin.ModelAdmin):
             )
         })
     )
-    readonly_fields=('last_login','date_joined')
+    readonly_fields=('last_login','date_joined', 'user_avatar')
     list_display = ("id", "full_name", "username", "email", "is_staff", "is_active", "action")
     search_fields = ['first_name', 'last_name', 'username', 'email']
     list_display_links = ('action',)
@@ -83,7 +88,13 @@ class UserAdmin(admin.ModelAdmin):
     
     def inactive_user(self, request, queryset):
         queryset.update(is_active=False)
+    
+    def user_avatar(self, obj):
+        return format_html('<img src="{}" width="160" height="145"/>'.format(obj.avatar.md_image.url))
+    
+    
     inactive_user.short_description = "Inactive selected users"
+    user_avatar.short_description = 'Profile Image'
 
     
 class CustomerAdminForm(forms.ModelForm):
