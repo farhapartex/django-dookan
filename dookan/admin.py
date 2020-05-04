@@ -6,10 +6,10 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.admin import GenericTabularInline
 from dookan.models import *
 from dookan.widgets import *
+from system.models import *
 import logging
 
 logger = logging.getLogger(__name__)
-USER_MODEL = get_user_model()
 # Register your models here.
 
 def get_site_info():
@@ -47,44 +47,6 @@ class OrderAdminForm(forms.ModelForm):
         widgets = {
             'order_note': HtmlEditor(attrs={'style': 'width: 90%; height: 100%;'}),
         }
-
-
-@admin.register(Media)
-class MediaAdmin(admin.ModelAdmin):
-    list_display = ("title", "image","md_image","sm_image", "created_by", "list_image_tag", "action")
-    list_display_links = ('action',)
-    list_filter = ('created_at', )
-    search_fields = ['title',]
-    fieldsets = (
-        ("Required Information", {
-            "description": "These fields are required for each Media",
-            "fields": (
-                ('title',),
-                ('image', 'image_tag'),
-            ),
-        }),
-        ("Optional Information", {
-            'classes': ('collapse',),
-            'fields': (
-                ('md_image','sm_image'),
-            )
-        })
-    )
-    readonly_fields = ('image_tag',)
-    list_per_page=10
-    
-
-    def image_tag(self, obj):
-        return format_html('<img src="{}" width="160" height="135"/>'.format(obj.image.url))
-    
-    def list_image_tag(self, obj):
-        return format_html('<img src="{}" width="75" height="50"/>'.format(obj.sm_image.url))
-    
-    def action(self, obj):
-        return format_html('{}'.format('Edit'))
-
-    image_tag.short_description = 'Image'
-    list_image_tag.short_description = 'Image Preview'
 
 
 @admin.register(PaymentMethod)
@@ -237,9 +199,10 @@ class OrderAdmin(admin.ModelAdmin):
             ),
         }),
         ("Discount Information", {
+            "description": "Admin can discount for any order. Admin can use discount field or coupon field for discount",
             'classes': ('collapse',),
             'fields': (
-                ('discount',),
+                ('discount', 'coupon'),
                 ('order_note')
             )
         })
@@ -257,10 +220,26 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):
-    fields = (('category', 'code'), ('amount', 'amount_type'), ('valid_from',), 'valid_until', 'active',)
+    fieldsets = (
+        ("General Information", {
+            "description": "General information for each Coupon",
+            "fields": (
+                ('code','amount', 'amount_type'),
+                'valid_from', 'valid_until',
+            ),
+        }),
+        ("Coupon Dependency", {
+            "description": "You can create coupon for a category or for a brand.",
+            'fields': (
+                ('category', 'is_brand', 'brand'),
+                'active',
+            )
+        })
+    )
     list_display_links = ('action',)
     list_display = ("category", "code", "amount", "amount_type", "valid_from", "valid_until", "active", "action")
-    list_filter = ("category", "code", "valid_from", "valid_until")
+    list_filter = ("valid_from", "valid_until")
+    search_fields = ['code',]
     list_per_page=10
 
     def action(self, obj):

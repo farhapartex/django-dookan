@@ -62,7 +62,7 @@
                     {% endif %}
 
                     {% if user.is_active and user.is_staff %}
-                    <li><a href="{% url 'admin:auth_user_change' user.id %}">{% trans 'Profile' %}</a></li>
+                    <li><a href="{% url 'admin:system_user_change' user.id %}">{% trans 'Profile' %}</a></li>
                     {% url 'django-admindocs-docroot' as docsroot %}
 
                     {% if docsroot %}
@@ -95,13 +95,7 @@
 
         {% endif %}
 
-        {% block messages %}
-        {% if messages %}
-        <ul class="messagelist" id="appMessageList" style="margin-top: 41px;">{% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message|capfirst }}</li>
-                {% endfor %}</ul>
-        {% endif %}
-        {% endblock messages %}
+        
 
         <!-- Content -->
         
@@ -123,14 +117,24 @@
                                 <a href="{% url 'admin:index' %}"><span class="mr-2"><i class="fas fa-tachometer-alt"></i></span> <b>{% trans 'Dashboard' %}</b></a>
                             </li>
                             <li class="list-group-item sidebar-nav-li">
-                                <a href="#"><span class="mr-2"><i class="fas fa-image"></i></span> <span>Media</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
+                                <a href="#">
+                                    <span class="mr-2"><i class="fas fa-image"></i></span>
+                                    <span>Media</span> 
+                                    <span class="float-right arrow-right"><i class="fas fa-angle-right"></i></span>
+                                    <span class="float-right arrow-down hide"><i class="fas fa-angle-down"></i></span>
+                                </a>
                                 <ul class="sidebar-list-submenu mt-3">
-                                    <li><a href="{% url 'admin:dookan_media_add' %}"><span class="mr-3"><i class="far fa-plus-square"></i></span> <span>Create</span></a></li>
-                                    <li><a href="{% url 'admin:dookan_media_changelist' %}"><span class="mr-3"><i class="fas fa-th-list"></i></span> <span>List</span></a></li>
+                                    <li><a href="{% url 'admin:system_media_add' %}"><span class="mr-3"><i class="far fa-plus-square"></i></span> <span>Create</span></a></li>
+                                    <li><a href="{% url 'admin:system_media_changelist' %}"><span class="mr-3"><i class="fas fa-th-list"></i></span> <span>List</span></a></li>
                                 </ul>
                             </li>
                             <li class="list-group-item sidebar-nav-li">
-                                <a href="#"><span class="mr-2"><i class="fas fa-box-open"></i></span> <span>Product</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
+                                <a href="#">
+                                    <span class="mr-2"><i class="fas fa-box-open"></i></span>
+                                    <span>Product</span>
+                                    <span class="float-right arrow-right"><i class="fas fa-angle-right"></i></span>
+                                    <span class="float-right arrow-down hide"><i class="fas fa-angle-down"></i></span>
+                                </a>
                                 <ul class="sidebar-list-submenu mt-3">
                                     <li><a href="{% url 'admin:dookan_category_changelist' %}"><span class="mr-3"><i class="fas fa-th"></i></span> <span>Category</span></a></li>
                                     <li><a href="{% url 'admin:dookan_brand_changelist' %}"><span class="mr-3"><i class="fab fa-bandcamp"></i></span> <span>Brand</span></a></li>
@@ -139,7 +143,12 @@
                                 </ul>
                             </li>
                             <li class="list-group-item sidebar-nav-li">
-                                <a href="#"><span class="mr-2"><i class="fas fa-luggage-cart"></i></span> <span>Order & Cart</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
+                                <a href="#">
+                                    <span class="mr-2"><i class="fas fa-luggage-cart"></i></span>
+                                    <span>Order & Cart</span>
+                                    <span class="float-right arrow-right"><i class="fas fa-angle-right"></i></span>
+                                    <span class="float-right arrow-down hide"><i class="fas fa-angle-down"></i></span>
+                                </a>
                                 <ul class="sidebar-list-submenu mt-3">
                                     <li><a href="{% url 'admin:dookan_cart_changelist' %}"><span class="mr-3"><i class="fas fa-shopping-cart"></i></span> <span>Cart</span></a></li>
                                     <li><a href="{% url 'admin:dookan_cartitem_changelist' %}"><span class="mr-3"><i class="fas fa-cart-plus"></i></span> <span>Cart Item</span></a></li>
@@ -147,9 +156,25 @@
                                 </ul>
                             </li>
                             <li class="list-group-item sidebar-nav-li">
-                                <a href="#"><span class="mr-2"><i class="fas fa-cogs"></i></span> <span>Settings</span> <span class="float-right"><i class="fas fa-angle-right"></i></span></a>
+                                <a href="#">
+                                    <span class="mr-2"><i class="fas fa-vector-square"></i></span>
+                                    <span>Services</span> 
+                                    <span class="float-right arrow-right"><i class="fas fa-angle-right"></i></span>
+                                    <span class="float-right arrow-down hide"><i class="fas fa-angle-down"></i></span>
+                                </a>
                                 <ul class="sidebar-list-submenu mt-3">
-                                    <li><a href="{% url 'admin:auth_user_changelist' %}"><span class="mr-3"><i class="fas fa-users"></i></span> <span>User</span></a></li>
+                                    <li><a href="{% url 'admin:dookan_coupon_changelist' %}"><span class="mr-3"><i class="fas fa-compress"></i></span> <span>Coupon</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item sidebar-nav-li">
+                                <a href="#">
+                                    <span class="mr-2"><i class="fas fa-cogs"></i></span>
+                                    <span>Settings</span>
+                                    <span class="float-right arrow-right"><i class="fas fa-angle-right"></i></span>
+                                    <span class="float-right arrow-down hide"><i class="fas fa-angle-down"></i></span>
+                                </a>
+                                <ul class="sidebar-list-submenu mt-3">
+                                    <li><a href="{% url 'admin:system_user_changelist' %}"><span class="mr-3"><i class="fas fa-users"></i></span> <span>User</span></a></li>
                                     <li><a href="{% url 'admin:system_customer_changelist' %}"><span class="mr-3"><i class="fas fa-user-shield"></i></span> <span>Customer</span></a></li>
                                     <li><a href="{% url 'admin:system_system_changelist' %}"><span class="mr-3"><i class="fas fa-dharmachakra"></i></span> <span>System</span></a></li>
                                     <li><a href="{% url 'admin:auth_group_changelist' %}"><span class="mr-3"><i class="fab fa-renren"></i></span> <span>User Role</span></a></li>
@@ -161,6 +186,15 @@
                 </div>
                 {% endif %}
                 <div class="{% if user.is_authenticated %}col-md-10 col-lg-10 col-xl-10 offset-2{% else %} col-md-12 col-lg-12 col-xl-12 h-100 login-container-fluid {% endif %}" id="main">
+                    
+                    {% block messages %}
+                    {% if messages %}
+                    <ul class="messagelist" id="appMessageList">{% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message|capfirst }}</li>
+                            {% endfor %}</ul>
+                    {% endif %}
+                    {% endblock messages %}
+                    
                     <div class="w-100 overflow-hidden h-100">
                         {% if user.is_authenticated %}
                         <div class="w-100">
@@ -207,10 +241,19 @@
 
                 $(".user-thumbnail").click(function(){
                     $(".user-tool-dropwdown").toggle(350);
+                    
                 });
 
                 $(".sidebar-nav-li").click(function(){
                     $(this).children(".sidebar-list-submenu").toggle(350);
+                    if ( $(this).children("a").children(".arrow-down").hasClass( "hide" ) ) { 
+                        $(this).children("a").children(".arrow-down").removeClass("hide");
+                        $(this).children("a").children(".arrow-right").addClass("hide");
+                    }
+                    else if ( $(this).children("a").children(".arrow-right").hasClass( "hide" ) ) { 
+                        $(this).children("a").children(".arrow-right").removeClass("hide");
+                        $(this).children("a").children(".arrow-down").addClass("hide");
+                    }
                 });
 
                 if ( $( "#app-breadcrumbs" ).hasClass( "position-fixed" ) ) {
@@ -220,14 +263,7 @@
                     $( "#appBaseContainer" ).removeClass("containerMargin");
                 }
 
-                if ( $( "#appMessageList" ).hasClass( "messagelist" ) ) { 
-                    $( "#appBaseContainer" ).removeClass("containerMargin");
-                    $( "#appBaseContainer" ).addClass("containerMarginDec");
-                }
-                else{
-                    $( "#appBaseContainer" ).addClass("containerMargin");
-                    $( "#appBaseContainer" ).removeClass("containerMarginDec");
-                }
+                
 
             });
 

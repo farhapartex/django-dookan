@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.shortcuts import get_object_or_404
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -8,41 +9,12 @@ from django.utils.text import slugify
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import logging, sys, uuid
-from system.models import Base, Customer
-from system.utils import *
-from .files import *
-from .media import DynamicImageResize
+from system.models import Base, User, Customer, Media
+# from system.utils import *
 
 
 # Create your models here.
 logger = logging.getLogger(__name__)
-USER_MODEL = get_user_model()
-
-class Media(Base):
-    title = models.CharField(_("Image Title"), max_length=50, blank=True, null=True)
-    image = models.ImageField(_("Image"), storage=fs,upload_to=image_upload_path)
-    md_image = models.ImageField(_("Medium Image"), storage=fs,upload_to=md_image_upload_path, blank=True, null=True)
-    sm_image = models.ImageField(_("Small Image"), storage=fs,upload_to=sm_image_upload_path, blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        try:
-            # get image size from settings.py file
-            md_size = settings.MID_IMAGE_SIZE
-            sm_size = settings.SM_IMAGE_SIZE
-        except :
-            # if no size get from settings.py, default size will be this
-            md_size = (768,1024)
-            sm_size = (265, 300)
-
-        if not self.md_image:
-            self.md_image = DynamicImageResize(md_size, self.image).get_resize_image()
-        if not self.sm_image:
-            self.sm_image = DynamicImageResize(sm_size, self.image).get_resize_image()
-
-        super(Media, self).save(*args, **kwargs)
-    
-    def __str__(self):
-        return self.title
 
 
 class PaymentMethod(Base):
@@ -121,13 +93,15 @@ class Product(Base):
 
 AMOUNT_TYPE_CHOICES = (('percentage', 'Percentage'), ('fixed', 'Fixed'))
 class Coupon(Base):
-    category = models.ForeignKey(Category, related_name="coupons", on_delete=models.CASCADE)
     code = models.CharField(_("Coupon Code"), max_length=15)
     amount = models.IntegerField()
     amount_type = models.CharField(_("Amount Type"), choices=AMOUNT_TYPE_CHOICES, default='percentage', max_length=15)
     valid_from = models.DateField()
     valid_until = models.DateField()
     active = models.BooleanField(default=True)
+    category = models.ForeignKey(Category, related_name="cat_coupons", on_delete=models.SET_NULL, blank=True, null=True)
+    is_brand = models.BooleanField(_("Is For Brand?"), default=False, blank=True, null=True)
+    brand = models.ForeignKey(Brand, related_name="brand_coupons", on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.code
@@ -160,12 +134,13 @@ class Order(Base):
     order_received = models.BooleanField(_("Is Order Received?"), default=False)
     order_reference = models.CharField(_("Order Reference"), max_length=40, blank=True, null=True)
     discount = models.DecimalField(_("Discount"), max_digits=12, decimal_places=2, blank=True, null=True)
+    coupon = models.CharField(_("Coupon"), max_length=15, blank=True, null=True)
     order_note = models.TextField(_("Order Note"),  blank=True, null=True)
     
     def clean(self):
         if self.discount > self.cost:
             raise ValidationError(_("Discount amount can't be greater than total cost"), code='invalid')
-        if self.diccount and (self.order_note == "" or self.order_note is None):
+        if (self.diccount or self.coupne) and (self.order_note == "" or self.order_note is None):
             raise ValidationError(_("You have to put a order note for a discount"), code='invalid')
 
     def save(self, *args, **kwargs):
@@ -183,7 +158,18 @@ class Order(Base):
                 self.cost += price
         
         if self.discount:
-            self.cost = self.cost-self.discount
+            self.cost -= self.discount
+        
+        if self.coupon:
+            queryset = Coupon.objects.all()
+            coupon = get_object_or_404(queryset, code=self.coupon)
+            
+            today = datetime.date.today()
+            if coupon.valid_from <= today and coupon.valid_until >= today:
+                if coupon.amount_type == "percentage":
+                    self.cost -= (self.cost * coupon.amount)/100
+                elif coupon.amount_type == "fixed":
+                    self.cost -= coupon.amount
             
 
         super().save(*args, **kwargs)
