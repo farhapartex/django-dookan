@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.conf import settings
 import logging, sys, uuid
 from .utils import *
@@ -85,6 +86,7 @@ class User(AbstractUser, Base):
     
     def __str__(self):
         return self.username
+        
 
 class Customer(Base):
     """docstring for Customer."""
