@@ -26,6 +26,7 @@ Quick start
     INSTALLED_APPS = [
         ...
         'dookan',
+        'system'
     ]
 
 3. Add a middleware 'mickey.middleware.CurrentUserMiddleware' at the very bottom of the MIDDLEWARE list this::
@@ -38,7 +39,7 @@ Quick start
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'dookan.middleware.CurrentUserMiddleware'
+    'system.middleware.CurrentUserMiddleware'
     ]
 
 4. In your project root folder import mickey urls like as::
